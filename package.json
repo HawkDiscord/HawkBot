@@ -1,0 +1,27 @@
+{
+  "name": "hawkbot",
+  "version": "1.0.0",
+  "description": "HawkBot",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js debug",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ForYaSee/HawkBot.git"
+  },
+  "author": "ForYaSee, Rxsto, Lee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ForYaSee/HawkBot/issues"
+  },
+  "homepage": "https://github.com/ForYaSee/HawkBot#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "eris": "^0.8.6",
+    "eris-sharder": "^1.7.8",
+    "express": "^4.16.3",
+    "rethinkdbdash": "^2.3.31"
+  }
+}
