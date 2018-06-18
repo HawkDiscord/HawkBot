@@ -1,7 +1,13 @@
 class Webpanel {
     constructor(sharder) {
         this.sharder = sharder;
+
+        this._startServer();
+    }
+
+    _startServer() {
+
     }
 }
 
-module.exports = Webpanel;
+exports.Webpanel = Webpanel;
