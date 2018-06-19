@@ -38,6 +38,16 @@ class Command {
 
         this.path = __filename;
     }
+
+    /**
+     * The method will be called if command should be executed.
+     * @param {message} message - the message that triggered the command
+     * @param {array} args - the message splitted in string
+     * @param {object} lang - a language object with the user's language
+     */
+    async run(message, args, lang) {
+        throw new Error(`[Command] ${this.name} doesn't provide a help`);
+    }
 }
 
 module.exports = Command
