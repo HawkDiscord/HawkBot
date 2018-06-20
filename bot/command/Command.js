@@ -30,7 +30,7 @@
 class Command {
     constructor(client, options) {
         this.client = client;
-        this.name = options.name || 'UnknownCommand';
+        this.name = options.name || 'unknownCommand';
         this.displayName = options.displayName || this.name;
         this.aliases = options.aliases || [];
         this.description = options.description || 'No description provided';
@@ -39,6 +39,7 @@ class Command {
         this.cooldown = options.cooldown || 0;
 
         this.path = __filename;
+        this.type = 'command';
     }
 
     /**
@@ -49,7 +50,7 @@ class Command {
      * @author ForYaSee
      */
     async run(message, args, lang) {
-        throw new Error(`[Command] ${this.name} doesn't provide a help.`);
+        throw new Error(`[Command] ${this.name} doesn't provide a run Method.`);
     }
 }
 

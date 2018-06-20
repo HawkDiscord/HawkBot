@@ -11,10 +11,11 @@
 class Module {
     constructor(client, options) {
         this.client = client;
-        this.name = options.name || 'Unknown Module';
+        this.name = options.name || 'unknownModule';
         this.displayName = options.displayName || name;
         this.description = options.description || 'No description provided';
         this.pathToCommands = options.pathToCommands || __dirname;
+        this.type = 'module';
     }
 }
 
