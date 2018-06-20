@@ -17,6 +17,7 @@ class CommandManager {
      */
     async loadAll() {
         this.loadCommands();
+        this.loadEvents();
     }
 
     /**
@@ -52,7 +53,7 @@ class CommandManager {
                         command.aliases.forEach(alias => {
                             this.client.commands[alias] = command;
                         });
-                        this.client.info('[CommandLoader]', `Loaded '${command.name}'(${command.aliases.length})`);
+                        this.client.info('CommandLoader', `Loaded '${command.name}'(${command.aliases.length}) Command`);
                     }                                                            
                 });                                                                                        
             }
@@ -62,14 +63,15 @@ class CommandManager {
      * Loads all events from client. The entrypoint is the bot/events/ directory
      */
     loadEvents() {
-        /*klaw(`${__dirname}/../events`).on('data' , eventItem => {
-            const eventFile = path.parse(eventItem);
-        if (!eventFile.ext || eventFile.ext !== '.js')
-                return;
-        delete require.cache[require.resolve(eventItem.path)];
-        const event = require(eventFile);
-        this.client.on(eventFile.split('.')[0],async(...args) => event(this.client, ...args));
-        });*/
+        klaw(`${__dirname}/../events`).on('data' , eventItem => {
+            const eventFile = path.parse(eventItem.path);
+            if (!eventFile.ext || eventFile.ext !== '.js')
+                    return;
+            this.client.info('EventLoader', `Loaded '${eventFile.name}' Event`);
+            delete require.cache[require.resolve(eventItem.path)];
+            const event = require(eventItem.path);
+            this.client.on(eventFile.name, async(...args) => event(this.client, ...args));
+        });
     }
 };
 
