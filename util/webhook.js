@@ -1,6 +1,6 @@
 const superagent = require("superagent");
-const shardhook = require(require("path").resolve("data/config.json")).webhooks.shard.url;
-const workerhook = require(require("path").resolve("data/config.json")).webhooks.worker.url;
+const shardhook = require(require("path").resolve("data/config.json")).webhooks.shard;
+const workerhook = require(require("path").resolve("data/config.json")).webhooks.worker;
 
 module.exports.sendWorker = async embed => {
     if(!workerhook) return false;

@@ -26,28 +26,27 @@ class ShardingManager extends EventEmitter {
     }
 
     async requestShardCount() {
-        let tokenRequest = await superagent.get("https://discordapp.com/api/gateway/bot").set("Authorization", this.token);
-        this.totalShards = tokenRequest.body.shards;
+        let tokenRequest = await superagent.get('https://discordapp.com/api/gateway/bot').set('Authorization', this.token);
+        this.lTotalShards = tokenRequest.body.shards;
     }
 
     async launch() {
         if(cluster.isMaster) {
             await this.requestShardCount();
-            if(cpuCount >= this.totalShards)
-                this.shardsPerWorker = 1;
+            if(cpuCount >= this.lTotalShards)
+                this.lShardsPerWorker = 1;
             else
-                this.shardsPerWorker = Math.ceil(this.totalShards / cpuCount);
-            this.workerCount = Math.ceil(this.totalShards / this.shardsPerWorker);
-
+                this.lShardsPerWorker = Math.ceil(this.lTotalShards / cpuCount);
+            this.workerCount = Math.ceil(this.lTotalShards / this.lShardsPerWorker);
             for(let i = 0; i < this.workerCount; i++) {
-                let shardStart = i * this.shardsPerWorker;
-                let shardEnd = ((i + 1) * this.shardsPerWorker) - 1;
-                if(shardEnd > this.totalShards - 1)
-                    shardEnd = this.totalShards - 1;
-                let shardRange = shardStart === shardEnd ? `shard ${shardStart}` : `shards ${shardStart}-${shardEnd}`;
+                let shardStart = i * this.lShardsPerWorker;
+                let shardEnd = ((i + 1) * this.lShardsPerWorker) - 1;
+                if(shardEnd > this.lTotalShards - 1)
+                    shardEnd = this.lTotalShards - 1;
                 const worker = cluster.fork();
-                const lTotalShards = this.totalShards;
-                Object.assign(worker, { type: "bot", shardStart, shardEnd, shardRange, lTotalShards });
+                const totalShards = this.lTotalShards;
+                const shardsPerWorker = this.lShardsPerWorker;
+                Object.assign(worker, { type: 'bot', shardStart, shardEnd, totalShards, shardsPerWorker});
                 let botSharder = new BotSharder(worker);
 
                 botSharder.on('started', () => {
@@ -62,7 +61,7 @@ class ShardingManager extends EventEmitter {
                     this.emit('workerCrashClosed', code);
                 });
 
-                botSharder.on('killes', code => {
+                botSharder.on('killed', code => {
                     this.emit('workerKilled', code);
                 });
             }

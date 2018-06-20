@@ -11,6 +11,7 @@ class BotSharder extends EventEmitter {
 
     assign() {
         this.worker.on('online', () => {
+            this.emit('started');
             this.worker.send({
                 type: 'startup',
                 shardRange: this.worker.shardRange,
@@ -22,7 +23,6 @@ class BotSharder extends EventEmitter {
         });
         this.assignShutdownListener();
         this.assignMessageListener();
-        this.emit('started');
     }
 
     assignMessageListener() {

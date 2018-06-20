@@ -15,7 +15,7 @@ class Hawk extends Eris.Client {
         this.rethink = rethinkdb.connectToRethink();
         this.commands = {};
         this.modules = {};
-        this.commandManager = new (require('./command/CommandManager'))(this);
+        this.loadingManager = new (require('./command/LoadingManager'))(this);
         this.launch();
     }
 
@@ -39,8 +39,9 @@ class Hawk extends Eris.Client {
         fancyLog(`[W:${this.worker.id}/S:${this.worker.shardStart}] [${type}] [${title}] ${message}`);
     }
 
+
     launch() {
-        this.commandManager.loadCommands();
+        this.loadingManager.loadAll();
         this.connect();
     }
 }
