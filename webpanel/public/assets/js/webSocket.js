@@ -4,7 +4,7 @@ socket.emit('requestShardStatus');
 
 /* Update status of one Shard */
 socket.on('shardStatusUpdate', shard => {
-    if(status == 0) {
+    if(shard.status == 0) {
         $('#shard-' + shard.id).addClass('success');
         $('#shard-' + shard.id).removeClass('error');
     } else {
@@ -12,7 +12,7 @@ socket.on('shardStatusUpdate', shard => {
         $('#shard-' + shard.id).removeClass('success');
 
     }
-    $('#shard-' + shard.id).text(getMessage(shard.status));
+    $('#shard-' + shard.id).text(`Shard #${(parseInt(shard.id) + 1)} » ${getMessage(shard.status)}`);
     socket.emit('requestOfflineShardCount');
 });
 
@@ -35,7 +35,15 @@ socket.on('updateOfflineShardCount', offlineShards => {
 
 function getMessage(status) {
     switch(status) {
-        case '0':
+        case 0:
             return 'Operational';
+        case 1:
+            return 'Having Issues';
+        case 2:
+            return 'Logging In';
+        case 3:
+            return 'Login Queued';
+        case 4:
+            return 'Loading Services';
     }
 }
