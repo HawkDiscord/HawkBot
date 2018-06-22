@@ -1,6 +1,11 @@
-const Eris = require('eris');
+const Eris = require("eris-additions")(require("eris"),
+    { enabled: ["Channel.awaitMessages", "Member.bannable", "Member.kickable", "Member.punishable", "Role.addable", "Channel.sendMessage", "Message.guild"] }
+);
 const rethinkdb = require('../util/rethink');
 const fancyLog = require('fancy-log');
+const fs = require('fs');
+
+const config = JSON.parse(fs.readFileSync('./data/config.json', 'utf-8'));
 
 class Hawk extends Eris.Client {
     constructor(token, options = {}) {
@@ -8,15 +13,29 @@ class Hawk extends Eris.Client {
             options,
             firstShardID: cluster.worker.shardStart,
             lastShardID: cluster.worker.shardEnd,
-            maxShards: cluster.worker.totalShards}
+            maxShards: cluster.worker.totalShards
+        }
+
         super(token, options);
 
         this.worker = cluster.worker;
-        this.rethink = rethinkdb.connectToRethink();
-        this.commands = {};
-        this.modules = {};
-        this.loadingManager = new (require('./command/LoadingManager'))(this);
-        this.launch();
+        this.shard = {
+            id: this.worker.shardStart
+        }
+        this.load(true);
+    }
+
+    async load(doLaunch=false){
+        require('../sharding/OutputHandler');
+        this.rethink = await rethinkdb.connectToRethink();
+        await rethinkdb.createDefaults(this.rethink);
+        this.servers = new Eris.Collection();
+        this.husers = new Eris.Collection();
+        this.config = config;
+        this.loadingManager = new (require('./core/LoadingManager'))(this);
+        this.loadingManager.loadAll();
+        if(doLaunch)
+            this.launch();
     }
 
     info(title, message) {
@@ -36,12 +55,11 @@ class Hawk extends Eris.Client {
     }
 
     log(type, title, message) {
-        fancyLog(`[W:${this.worker.id}/S:${this.worker.shardStart}] [${type}] [${title}] ${message}`);
+        fancyLog(`[Worker - ${this.worker.id} | Shard - ${this.worker.shardStart}] [ ${type} ] [${title}] ${message}`);
     }
 
 
     launch() {
-        this.loadingManager.loadAll();
         this.connect();
     }
 }

@@ -1,12 +1,14 @@
 const path = require('path');
-const Module = require('./Module');
-const Command = require('./Command');
+const Module = require('../command/Module');
+const Command = require('../command/Command');
 const klaw = require('klaw');
+const Eris = require('eris');
+const fs = require('fs');
 
 /**
- * 
+ * Manager for all loading stuff
  */
-class CommandManager {
+class LoadingManager {
     constructor(client) {
         this.client = client;
         this.rethink = client.rethink;
@@ -16,8 +18,14 @@ class CommandManager {
      * Calls all load functions
      */
     async loadAll() {
+        this.client.commands = {};
+        this.client.modules = {};
+        this.client.emotes = new Eris.Collection();
+        this.client.locales = {};
         this.loadCommands();
         this.loadEvents();
+        this.loadEmotes();
+        this.loadLocales();
     }
 
     /**
@@ -25,7 +33,10 @@ class CommandManager {
      * @param {string} path - the path to the commandfile
      */
     async loadCommand(path) {
-
+        let command = require(path);
+        if(!command)
+            return console.log('penis');
+        this.client.commands[command.name] = command;
     }
 
     /**
@@ -59,6 +70,7 @@ class CommandManager {
             }
         });
     }
+
     /**
      * Loads all events from client. The entrypoint is the bot/events/ directory
      */
@@ -66,13 +78,35 @@ class CommandManager {
         klaw(`${__dirname}/../events`).on('data' , eventItem => {
             const eventFile = path.parse(eventItem.path);
             if (!eventFile.ext || eventFile.ext !== '.js')
-                    return;
+                return;
             this.client.info('EventLoader', `Loaded '${eventFile.name}' Event`);
             delete require.cache[require.resolve(eventItem.path)];
             const event = require(eventItem.path);
+            this.client.removeAllListeners(eventFile.name);
             this.client.on(eventFile.name, async(...args) => event(this.client, ...args));
+        });
+    }
+    /**
+     * Loads all emotes that are needed to create nice emotions. :)
+     */
+    loadEmotes() {
+        this.client.emotes.set("info", ":information_source: ");
+        this.client.emotes.set("warning", ":warning: ");
+        this.client.emotes.set("point", ":white_small_square: ");
+    }
+
+    /**
+     * Loads all locale files and caches them
+     */
+    async loadLocales() {
+        await fs.readdir(`${__dirname}/../../data/locales`, (err, files) => {
+            files.forEach(file => {
+                let invoke = file.split('.')[0];
+                this.client.locales[invoke] = JSON.parse(fs.readFileSync(`${__dirname}/../../data/locales/${file}`));
+                this.client.info('LOCALE', `Intialised '${invoke}'`);
+            });
         });
     }
 };
 
-module.exports = CommandManager;
+module.exports = LoadingManager;

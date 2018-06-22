@@ -1,0 +1,15 @@
+{
+    "commandParser": {
+        "noInvoke": "The current prefix is `%prefix%`"
+    },
+
+    "reload": {
+        "all": ":white_check_mark: Reloaded the bot."
+    },
+
+    "restart": {
+        "currentShard": "Restarting current shard.",
+        "allShards": "Restarting all shards.",
+        "specificShard": "Restarting shard %shard%."
+    }
+}

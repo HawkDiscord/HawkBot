@@ -35,6 +35,29 @@ sharder.on('workerStarted', worker => {
     });
 });
 
+sharder.on('workerReboot', worker => {
+    webhook({
+        author: {
+            name: `Rebooted #${worker.id}`,
+            icon_url: 'https://cdn.discordapp.com/icons/457992291001303041/ccf0a32ae94a37f5a1e1ccc7e81fb1c9.png'
+        },
+        color: 0x37b739,
+        fields: [
+            {
+                name: 'Total Shards',
+                value: `Count: ${worker.shardsPerWorker}`,
+                inline: true,
+            },
+            {
+                name: 'Shards on Worker',
+                value: `Total ${worker.shardStart}-${worker.shardEnd}`,
+                inline: true
+            }
+        ]
+    });
+});
+
 sharder.launch();
 
-let panel = new Webpanel(sharder);
+if(cluster.isMaster)
+    new Webpanel(sharder);

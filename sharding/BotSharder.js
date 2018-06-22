@@ -38,7 +38,6 @@ class BotSharder extends EventEmitter {
             else if(this.workerCrashes[this.worker.shardRange] >= 5)
                 this.emit('crashClose', {code: code});
             else {
-                this.emit('reboot', {code: code});
                 const newWorker = cluster.fork();
                 Object.assign(newWorker, {
                     type: "bot",
@@ -47,6 +46,7 @@ class BotSharder extends EventEmitter {
                     shardRange: this.worker.shardRange,
                     totalShards: this.worker.totalShards
                 });
+                this.emit('reboot', {code: code, newWorker: newWorker});
                 module.exports = newWorker;
                 if(!this.workerCrashes[this.worker.shardRange])
                     this.workerCrashes[this.worker.shardRange] = 1;

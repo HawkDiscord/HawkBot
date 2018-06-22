@@ -2,6 +2,7 @@ const cpuCount = require('os').cpus().length;
 const superagent = require('superagent');
 const { EventEmitter } = require('events');
 const BotSharder = require("./BotSharder");
+const fancyLog = require('fancy-log');
 const path = require('path');
 let Main;
 let Args;
@@ -38,6 +39,13 @@ class ShardingManager extends EventEmitter {
             else
                 this.lShardsPerWorker = Math.ceil(this.lTotalShards / cpuCount);
             this.workerCount = Math.ceil(this.lTotalShards / this.lShardsPerWorker);
+
+            fancyLog('[ClusterManager] **************');
+            fancyLog(`[ClusterManager] * Shards: ${this.lTotalShards}`);
+            fancyLog(`[ClusterManager] * Workers: ${this.workerCount}`);
+            fancyLog(`[ClusterManager] * S/W: ${this.lShardsPerWorker}`);
+            fancyLog('[ClusterManager] **************');
+            
             for(let i = 0; i < this.workerCount; i++) {
                 let shardStart = i * this.lShardsPerWorker;
                 let shardEnd = ((i + 1) * this.lShardsPerWorker) - 1;
@@ -53,8 +61,8 @@ class ShardingManager extends EventEmitter {
                     this.emit('workerStarted', worker);
                 });
 
-                botSharder.on('reboot', code => {
-                    this.emit('workerReboot');
+                botSharder.on('reboot', (code) => {
+                    this.emit('workerReboot', worker);
                 });
 
                 botSharder.on('crashClose', code => {
@@ -68,8 +76,6 @@ class ShardingManager extends EventEmitter {
         }
     }    
 }
-
-
 
 if(!cluster.isMaster) {
     async function startupMessage(msg) {

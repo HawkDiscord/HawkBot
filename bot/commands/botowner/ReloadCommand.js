@@ -27,8 +27,16 @@ class ReloadCommand extends Command {
         });
     }
 
-    async run(message, args, lang) {
-        message.channel.createMessage('kys');
+    async run(msg, args, lang) {
+       switch(args[0]) {
+            case undefined:
+                await this.client.load();
+                return msg.channel.createMessage(lang.reload.all);
+            case '-c':
+                if(!args[1])
+                    return;
+                await this.client.loadingManager.loadCommand(this.client.commands[args[1]].path);
+       }
     }
 }
 
