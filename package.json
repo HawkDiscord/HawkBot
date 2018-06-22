@@ -19,6 +19,7 @@
   "homepage": "https://github.com/ForYaSee/HawkBot#readme",
   "dependencies": {
     "big-number": "^1.0.0",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "ejs": "^2.6.1",

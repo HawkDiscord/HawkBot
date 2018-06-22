@@ -1,3 +1,4 @@
+global.Promise = require("bluebird");
 global.cluster = require('cluster');
 const fs = require('fs');
 const { Webpanel } = require('./webpanel/Webpanel.js');
@@ -5,6 +6,8 @@ const Sharder = require('./sharding/ShardingManager');
 const { sendWorker:webhook } = require('./util/webhook.js');
 
 const config = JSON.parse(fs.readFileSync('./data/config.json', 'utf-8'));
+require('./sharding/OutputHandler');
+
 
 const sharder = new Sharder(config.bot.token, `${__dirname}/bot/Hawk.js`, {
     disableEvents: { TYPING_START: true },

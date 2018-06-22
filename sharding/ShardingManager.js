@@ -1,7 +1,7 @@
 const cpuCount = require('os').cpus().length;
 const superagent = require('superagent');
 const { EventEmitter } = require('events');
-const BotSharder = require("./BotSharder");
+const BotSharder = require('./BotSharder');
 const fancyLog = require('fancy-log');
 const path = require('path');
 let Main;
