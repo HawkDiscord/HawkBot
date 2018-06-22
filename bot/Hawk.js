@@ -24,10 +24,10 @@ class Hawk extends Eris.Client {
             id: this.worker.shardStart
         }
         this.load(true);
+        global.bot = this;
     }
 
     async load(doLaunch=false) {
-        require('../sharding/OutputHandler');
         this.info(`Core`, `Successfully launched shard ${this.worker.shardStart}!`);
         this.rethink = await rethinkdb.connectToRethink();
         await rethinkdb.createDefaults(this.rethink);
@@ -37,7 +37,7 @@ class Hawk extends Eris.Client {
         this.loadingManager = new (require('./core/LoadingManager'))(this);
         this.loadingManager.loadAll();
         if(doLaunch)
-            this.launch();
+            this.launch();       
     }
 
     info(title, message) {
@@ -68,4 +68,18 @@ class Hawk extends Eris.Client {
         });
     }
 }
+
+cluster.worker.on("message", async msg => {
+    if(msg.type === "eval") {
+        try {
+            let result = (await eval(msg.input));
+            process.send({ type: "output", result, id: msg.id });
+        } catch(err) {
+            process.send({ type: "output", error: err.stack, id: msg.id });
+        }
+    } else if(msg.type === "output") {
+            cluster.worker.emit("outputMessage", msg);
+    }
+}); 
+
 module.exports = Hawk;
