@@ -1,10 +1,10 @@
 const superagent = require('superagent');
 
-module.exports = client => {
+module.exports = id => {
     client.info('Shard', 'Started!');
-    superagent.post(`${client.config.webpanel.baseurl}/api/shards/${client.shard.id}/status`).send({
+    superagent.post(`${client.config.webpanel.baseurl}/api/shards/${id}/status`).send({
         token: client.config.webpanel.token,
-        status: 'ready'
+        status: 0
     }).then(() => {
         //
     });
