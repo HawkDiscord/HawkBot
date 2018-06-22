@@ -23,7 +23,8 @@ class ReloadCommand extends Command {
                     usage: '-f <feature>',
                     description: 'Reloads predefined features.'
                 }
-            ]                                                
+            ],
+            path: __filename                                               
         });
     }
 
@@ -36,6 +37,7 @@ class ReloadCommand extends Command {
                 if(!args[1])
                     return;
                 await this.client.loadingManager.loadCommand(this.client.commands[args[1]].path);
+                return msg.channel.createMessage((lang.reload.cmd).replace("%cmd%",args[1]));
        }
     }
 }
