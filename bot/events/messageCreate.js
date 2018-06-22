@@ -10,7 +10,7 @@ async function run(client, msg) {
     await hawkUser.check(client, msg.author);
 
     let guild = client.servers.get(msg.guild.id);
-    let author = client.husers.get(msg.author.id);
+    let author = client.members.get(msg.author.id);
 
     if (!guild || !author)
         return await run(client, msg);
