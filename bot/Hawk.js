@@ -2,7 +2,6 @@ const Eris = require("eris-additions")(require("eris"),
     { enabled: ["Channel.awaitMessages", "Member.bannable", "Member.kickable", "Member.punishable", "Role.addable", "Channel.sendMessage", "Message.guild"] }
 );
 const rethinkdb = require('../util/rethink');
-const fancyLog = require('fancy-log');
 const fs = require('fs');
 const colors = require('colors');
 
