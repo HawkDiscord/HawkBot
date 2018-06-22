@@ -1,7 +1,7 @@
 module.exports = {
 
     async check(client, user) {
-        if (client.husers.has(user.id))
+        if (client.members.has(user.id))
             return;
         await client.rethink.table('users').filter({
             id: user.id
@@ -29,7 +29,7 @@ module.exports = {
 
     async _cacheNoRequest(client, user, res) {
         const newUser = Object.assign(user, res[0]);
-        client.husers.set(user.id, newUser);
+        client.members.set(user.id, newUser);
     },
 
     async _cache(client, user) {
@@ -37,7 +37,7 @@ module.exports = {
             id: user.id
         }).run().then(async res => {
             const newUser = Object.assign(user, res[0]);
-            client.husers.set(user.id, newUser);
+            client.members.set(user.id, newUser);
         });
     },
 
@@ -46,7 +46,7 @@ module.exports = {
             id: userId
         }).delete().run(res => {
             client.info('Database', `Deleted user: ${userId}`);
-            client.husers.delete(userId);
+            client.members.delete(userId);
         });
     },
 
