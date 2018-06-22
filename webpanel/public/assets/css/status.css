@@ -1,25 +1,28 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700');
 
 body {
-    background-color: #2C2F33 !important;
+    background-color: #23272A !important;
 }
 
 .hawk-con {
     margin-bottom: 25px;
 }
 
-.hawk-status-title {
-    margin: 50px;
+.title-box {
+    margin: 60px;
     text-align: center;
+}
+
+.hawk-status-title {
     font-size: 5em;
     font-weight: 700;
     color: #eeeaee;
+    display: inline;
 }
 
 .hawk-status-logo {
     height: 100px;
-    width: auto;
-    margin-right: 10px;
+    margin: 25px;
 }
 
 .success {

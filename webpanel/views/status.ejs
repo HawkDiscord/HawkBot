@@ -24,7 +24,9 @@
         <div id="bar" class="bar"></div>
         <div class="container hawk-con">
             <main class="hawk-status">
-                <p class="hawk-status-title animated fadeInDown"><img class="hawk-status-logo animated rotateIn" src="assets/img/Logo.png">Hawk Status</p>
+                <div class="title-box animated fadeInDown">
+                    <p class="hawk-status-title">Hawk<img class="hawk-status-logo animated rotateIn" src="assets/img/Logo.png">Status</p>
+                </div>
 
                 <div class="list-group">
                     <li id="all-shards" class="list-group-item error animated fadeInDown">Loading...</li>
@@ -34,7 +36,7 @@
 
                 <div class="list-group">
                     <% for(let i = 0; i < sharder.lTotalShards; i++) { %>
-                        <li id="shard-<%= i %>" class="list-group-item error animated fadeInUp">Shard #<%= (i+1) %> » Loading</li>
+                        <li id="shard-<%= i %>" class="list-group-item error animated fadeInUp">Shard #<%= (i+1) %> » Loading...</li>
                     <% } %>
                 </div>
             </main>
