@@ -27,11 +27,7 @@ class Hawk extends Eris.Client {
     }
 
     async load(doLaunch=false) {
-<<<<<<< HEAD
-        this.info(`Core`, `Successfully launched shard ${this.worker.shardStart}!`);
-=======
         this.info(`Core`, `Successfully launched client with shards from ${this.worker.shardStart} to ${this.worker.shardEnd}!`);
->>>>>>> origin/rxsto-dev
         this.rethink = await rethinkdb.connectToRethink();
         await rethinkdb.createDefaults(this.rethink);
         this.servers = new Eris.Collection();
