@@ -4,6 +4,7 @@ const Eris = require("eris-additions")(require("eris"),
 const rethinkdb = require('../util/rethink');
 const fancyLog = require('fancy-log');
 const fs = require('fs');
+const colors = require('colors');
 
 const config = JSON.parse(fs.readFileSync('./data/config.json', 'utf-8'));
 
@@ -26,7 +27,8 @@ class Hawk extends Eris.Client {
         global.bot = this;
     }
 
-    async load(doLaunch=false){
+    async load(doLaunch=false) {
+        this.info(`Core`, `Successfully launched shard ${this.worker.shardStart}!`);
         this.rethink = await rethinkdb.connectToRethink();
         await rethinkdb.createDefaults(this.rethink);
         this.servers = new Eris.Collection();
@@ -55,12 +57,15 @@ class Hawk extends Eris.Client {
     }
 
     log(type, title, message) {
-        fancyLog(`[Worker - ${this.worker.id} | Shard - ${this.worker.shardStart}] [ ${type} ] [${title}] ${message}`);
+        console.log(`[ `.white + `W - ${this.worker.id} | S - ${(this.worker.shardStart.toString().length == 1 ? "0" + this.worker.shardStart.toString() : this.worker.shardStart)} ] `.white + `[`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
     }
-
-
+    
     launch() {
         this.connect();
+
+        this.on('ready', () => {
+            this.emit('launchNext');            
+        });
     }
 }
 
