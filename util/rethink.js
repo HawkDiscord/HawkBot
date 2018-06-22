@@ -5,6 +5,7 @@ const config = JSON.parse(fs.readFileSync('./data/config.json', 'utf-8'));
 
 module.exports = {
     connectToRethink: async () => {
+        Object.assign(config.rethinkdb, { silent: true });
         return await rethinkdbdash(config.rethinkdb);
     },
 
@@ -15,7 +16,7 @@ module.exports = {
             try {
                 await rethink.tableCreate(tables[i]).run();
             } catch (e) {
-                //Table exist
+                //Table exists
             }
         }
     }

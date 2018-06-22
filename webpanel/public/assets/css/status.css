@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700');
+
+body {
+    background-color: #2C2F33 !important;
+}
+
+.hawk-con {
+    margin-bottom: 25px;
+}
+
+.hawk-status-title {
+    margin: 50px;
+    text-align: center;
+    font-size: 5em;
+    font-weight: 700;
+    color: #eeeaee;
+}
+
+.hawk-status-logo {
+    height: 100px;
+    width: auto;
+    margin-right: 10px;
+}
+
+.success {
+    color: white;
+    background-color: #2ecc71 !important;
+    font-weight: 400;
+}
+
+.error {
+    color: white;
+    background-color: #f44336 !important;
+    font-weight: 400;
+}
+
+li {
+    font-weight: 600;
+}
