@@ -29,7 +29,7 @@ class ShardingManager extends EventEmitter {
 
     async requestShardCount() {
         let tokenRequest = await superagent.get('https://discordapp.com/api/gateway/bot').set('Authorization', this.token);
-        this.lTotalShards = 3; //tokenRequest.body.shards;
+        this.lTotalShards = tokenRequest.body.shards;
     }
 
     async launch() {
