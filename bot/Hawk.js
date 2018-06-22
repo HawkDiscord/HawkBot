@@ -28,11 +28,11 @@ class Hawk extends Eris.Client {
     }
 
     async load(doLaunch=false) {
-        this.info(`Core`, `Successfully launched shard ${this.worker.shardStart}!`);
+        this.info(`Core`, `Successfully launched client with shards from ${this.worker.shardStart} to ${this.worker.shardEnd}!`);
         this.rethink = await rethinkdb.connectToRethink();
         await rethinkdb.createDefaults(this.rethink);
         this.servers = new Eris.Collection();
-        this.husers = new Eris.Collection();
+        this.members = new Eris.Collection();
         this.config = config;
         this.loadingManager = new (require('./core/LoadingManager'))(this);
         this.loadingManager.loadAll();
