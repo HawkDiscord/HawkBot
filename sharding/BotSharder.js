@@ -5,8 +5,8 @@ class BotSharder extends EventEmitter {
     constructor(worker) {
         super();
         this.worker = worker;
-        this.assign();
         this.workerCrashes = {};
+        this.assign();
     }
 
     assign() {
@@ -23,6 +23,11 @@ class BotSharder extends EventEmitter {
         });
         this.assignShutdownListener();
         this.assignMessageListener();
+        this.assignBotListener();
+    }
+
+    assignBotListener() {
+       
     }
 
     assignMessageListener() {
@@ -47,7 +52,7 @@ class BotSharder extends EventEmitter {
                     totalShards: this.worker.totalShards
                 });
                 this.emit('reboot', {code: code, newWorker: newWorker});
-                module.exports = newWorker;
+                new BotSharder(newWorker);
                 if(!this.workerCrashes[this.worker.shardRange])
                     this.workerCrashes[this.worker.shardRange] = 1;
                 else

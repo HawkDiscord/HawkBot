@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,700');
+
+body {
+    background-color: #23272A !important;
+}
+
+.hawk-con {
+    margin-bottom: 25px;
+    margin: 0 auto -50px;
+}
+
+.title-box {
+    margin: 60px;
+    text-align: center;
+}
+
+.hawk-status-title {
+    font-size: 5em;
+    font-weight: 700;
+    color: #eeeaee;
+    display: inline;
+}
+
+.hawk-status-logo {
+    height: 100px;
+    margin: 25px;
+}
+
+.hawk-footer,
+.push {
+    height: 50px;
+    margin-bottom: 25px;
+}
+
+.footer-text {
+    color: #99AAB5;
+    text-align: center;
+}
+
+.footer-text a {
+    transition: .3s;
+    color: #99AAB5;
+    text-decoration: none;
+}
+
+.footer-text a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.success {
+    color: white;
+    background-color: #2ecc71 !important;
+    font-weight: 400;
+}
+
+.error {
+    color: white;
+    background-color: #f44336 !important;
+    font-weight: 400;
+}
+
+li {
+    font-weight: 600;
+}
