@@ -1,33 +1,41 @@
 var socket = io();
 
+socket.emit('requestShardStatus');
+
 /* Update status of one Shard */
-socket.on('updateShardState', msg => {
-    var json = JSON.parse(msg);
-    if(json.state == 'error') {
-        $("#shard-" + json.id).addClass('error');
-        $("#shard-" + json.id).removeClass('success');
+socket.on('shardStatusUpdate', shard => {
+    if(status == 0) {
+        $('#shard-' + shard.id).addClass('success');
+        $('#shard-' + shard.id).removeClass('error');
     } else {
-        $("#shard-" + json.id).addClass('success');
-        $("#shard-" + json.id).removeClass('error');
+        $('#shard-' + shard.id).addClass('error');
+        $('#shard-' + shard.id).removeClass('success');
 
     }
-    $("#shard-" + json.id).text("Shard #" + (parseInt(json.id) + 1) + " - " + json.message);
+    $('#shard-' + shard.id).text(getMessage(shard.status));
     socket.emit('requestOfflineShardCount');
 });
 
 /* Update x shards are offline bar */
 socket.on('updateOfflineShardCount', offlineShards => {
     if(offlineShards == 0){
-        $("#all-shards").addClass('success');
-        $("#all-shards").removeClass('error');
-        $("#all-shards").text("All shards operational!");
+        $('#all-shards').addClass('success');
+        $('#all-shards').removeClass('error');
+        $('#all-shards').text('All shards operational!');
     } else {
-        $("#all-shards").addClass('error');
-        $("#all-shards").removeClass('success');
+        $('#all-shards').addClass('error');
+        $('#all-shards').removeClass('success');
         if(offlineShards == 1) {
-            $("#all-shards").text(`${offlineShards} shard is experiencing issues!`);
+            $('#all-shards').text(`${offlineShards} shard is experiencing issues!`);
         } else {
-            $("#all-shards").text(`${offlineShards} shards are experiencing issues!`);
+            $('#all-shards').text(`${offlineShards} shards are experiencing issues!`);
         }
     }
 });
+
+function getMessage(status) {
+    switch(status) {
+        case '0':
+            return 'Operational';
+    }
+}

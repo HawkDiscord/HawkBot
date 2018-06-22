@@ -7,14 +7,17 @@ router.post('/:shardId/status', (req, res) => {
     if(req.body.token !== process.config.webpanel.token)
         return res.sendStatus(401);
 
+    let shard = {
+        id: req.params.shardId,
+        status: req.body.status
+    };
+
+    process.shards.set(req.params.shardId, shard);
+
     //Execute socket.io
     if(process.io) {
-        process.io.emit('shardStatusUpdate', {
-            id: req.params.shardId,
-            status: req.body.status
-        });
+        process.io.emit('shardStatusUpdate', shard);
     }
-    //process.shards[parseInt(req.params.shardId)].status = req.body.status;
     res.sendStatus(200);
 });
 
