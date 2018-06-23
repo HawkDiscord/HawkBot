@@ -11,7 +11,8 @@ class PingCommand extends Command {
     }
 
     async run(message, args, lang) {
-        return message.channel.createMessage(this.client.emotes.get('info') + ' ' + (lang.ping.currentPing).replace('%ping%', this.client.shards.get(0).latency));
+        message.channel.awaitMessage()
+        return message.channel.sendMessage(this.client.emotes.get('info') + ' ' + (lang.ping.currentPing).replace('%ping%', this.client.shards.get(0).latency));
     }
 }
 

@@ -4,9 +4,9 @@
  * @param {eris} client - the eris instance that is used in the current shard
  * @param {string} options.name - the internal command name
  * @param {string} options.displayName - the public visible command name
- * @param {array} options.aliases - the command aliases
+ * @param {Array<string>} options.aliases - the command aliases
  * @param {string} options.description - the command description
- * @param {array} options.usages - array with all usages of the command
+ * @param {Array} options.usages - array with all usages of the command
  * @param {string} options.path string with __filename to the Command
  * @example
  * options.usages = [
@@ -19,12 +19,8 @@
  *        description: ...
  *    }
  *]
- * @param {object} options.permissions - the command permissions
- * @example
- * options.permissions = {
- *     botowner: false,
- *     default: true
- * }
+ * @param {boolean} options.botowner - whether the command should only be executable for botowners
+ * @param {Array<Permission>} options.permissions - the command permissions
  * @param {int} options.cooldown - the command cooldown
  * @author ForYaSee
  */
@@ -36,9 +32,9 @@ class Command {
         this.aliases = options.aliases || [];
         this.description = options.description || 'No description provided';
         this.usages = options.usages || [{usage: '', description: this.description}];
-        this.permissions = options.permissions || {botowner: false, default: true};
+        this.botowner = options.botowner || false;
+        this.permissions = options.permissions || [client.permissions.NONE];
         this.cooldown = options.cooldown || 0;
-
         this.path = options.path ||__filename;
         this.type = 'command';
     }

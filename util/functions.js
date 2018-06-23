@@ -5,6 +5,8 @@ const MusicManager = require('../bot/core/MusicManager');
 
 const config = JSON.parse(fs.readFileSync('./data/config.json', 'utf-8'));
 
+
+
 module.exports = {
     updateShardStatus(id, status) {
         post(`${config.webpanel.baseurl}/api/shards/${id}/status`).send({
