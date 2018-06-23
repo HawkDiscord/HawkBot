@@ -16,5 +16,13 @@
 
     "ping": {
         "currentPing": "The current latency between the bot and the Discord API is **%ping%**ms."
+    },
+
+    "help": {
+        "general": {
+            "title": "Hawk - Help",
+            "description": "Loaded a total of %modules% modules with %command% aliases.",
+            "footer": "Type '%prefix%help <command>' for detailed information about a command."
+        }
     }
 }
