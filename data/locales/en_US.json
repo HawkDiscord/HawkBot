@@ -30,5 +30,11 @@
             "aliases": "Aliases",
             "permission": "Permission"
         }
+    },
+
+    "prefix": {
+        "current": "Current prefix is `%prefix%`",
+        "length": "The maximum allowed prefix length is 5.",
+        "success": "Successfully changed the prefix."
     }
 }

@@ -1,4 +1,5 @@
 const Command = require('../../command/Command');
+const hawkGuild = require('../../entities/HawkGuild.js');
 
 class PrefixCommand extends Command {
     constructor(client) {
@@ -12,7 +13,20 @@ class PrefixCommand extends Command {
     }
 
     async run(msg, args, lang) {
-        msg.channel.createMessage(msg.guild.prefix);
+        if(args.length === 2) {
+            if(args[0] !== 'set')
+                return await this.sendCurrentPrefix(msg, lang);
+            let newPrefix = args[1];
+            if(newPrefix.length > 5)
+                return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.prefix.length}`)
+            hawkGuild.update(this.client, msg.guild, {prefix: newPrefix});
+            return msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.prefix.success}`);
+        } else
+            return await this.sendCurrentPrefix(msg, lang);
+    }
+
+    async sendCurrentPrefix(msg, lang) {
+        return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.prefix.current.replace('%prefix%', msg.guild.prefix)}`);
     }
 }
 

@@ -97,9 +97,10 @@ class LoadingManager {
      * Loads all emotes that are needed to create nice emotions. :)
      */
     loadEmotes() {
-        this.client.emotes.set("info", ":information_source: ");
-        this.client.emotes.set("warning", ":warning: ");
-        this.client.emotes.set("point", ":white_small_square: ");
+        this.client.emotes.set('info', ':information_source: ');
+        this.client.emotes.set('warning', ':warning: ');
+        this.client.emotes.set('point', ':white_small_square: ');
+        this.client.emotes.set('check', ':white_check_mark: ')
     }
 
     /**

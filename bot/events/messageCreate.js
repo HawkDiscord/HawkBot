@@ -38,9 +38,11 @@ async function run(client, msg) {
         return;
     if(!guild.members.get(client.user.id).permission.has(client.permissions.SEND_MESSAGES))
         return;
-    for(let permission of cmd.permissions) {
-        if(!msg.member.permission.has(permission))
-            return msg.channel.createMessage(`${client.emotes.get('warning')} You don't have enough permissions to execute this command.`);
+    if(!msg.member.permission.has(client.permissions.ADMINISTRATOR)) {
+        for(let permission of cmd.permissions) {
+            if(!msg.member.permission.has(permission))
+                return msg.channel.createMessage(`${client.emotes.get('warning')} You don't have enough permissions to execute this command.`);
+        }
     }
     cmd.run(msg, args, lang).catch(error => {
         if (error.message || error.stack)
