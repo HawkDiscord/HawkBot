@@ -35,7 +35,6 @@ class Hawk extends Eris.Client {
         this.update(4);
         this.loadingManager = new (require('./core/LoadingManager'))(this);
         this.loadingManager.loadAll();
-        console.log(this)
         if(doLaunch) {
             this.update(2);
             this.launch();
