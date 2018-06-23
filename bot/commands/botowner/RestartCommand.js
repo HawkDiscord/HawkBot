@@ -19,31 +19,32 @@ class RestartCommand extends Command {
                     usage: '-a',
                     description: 'Restarts all shards.'
                 }
-            ]
+            ],
+            path: __filename
         });
     }
 
     async run(msg, args, lang) {
        switch(args[0]){
             case undefined:
-                await msg.channel.createMessage(`${client.emotes.get("info")} ${lang.restart.currentShard}`);
+                await msg.channel.createMessage(`${this.client.emotes.get("info")} ${lang.restart.currentShard}`);
                 process.exit(1);
                 break;
             case '-s':
                 if(!args[1])
                     return;
-                await msg.channel.createMessage(`${client.emotes.get("info")} ${lang.commandParser.noInvoke.replace('%shard%', args[1])}`);
-                console.log(await process.output({
+                await msg.channel.createMessage(`${this.client.emotes.get("info")} ${lang.commandParser.noInvoke.replace('%shard%', args[1])}`);
+                (await process.output({
                     type: 'shard',
                     target: args[1],
                     input: () => process.exit(1)
                 }));
                 break;
             case '-a':
-                await msg.channel.createMessage(`${client.emotes.get("info")} ${lang.restart.allShards}`);
+                await msg.channel.createMessage(`${this.client.emotes.get("info")} ${lang.restart.allShards}`);
                 console.log(await process.output({
                     type: 'all_shards',
-                    input:  console.log(402)
+                    input: () => process.exit(1)
                 }));
                 break;
        }

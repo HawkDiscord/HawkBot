@@ -6,7 +6,6 @@ const bigNumber = require('big-number');
 class OutputHandler extends EventEmitter {
 	constructor(msg) {
 		super();
-		console.log(msg.input);
 		if(typeof msg.input === 'function') {
 			msg.input = `(${msg.input.toString()}).call()`;
 		} else if(typeof msg.input === 'string') {

@@ -1,3 +1,4 @@
+const { Collection } = require('eris');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -15,7 +16,7 @@ const fancyLog = require('fancy-log');
 let rethink = rethinkdb(config.rethinkdb);
 process.config = config;
 process.rethink = rethink;
-process.shards = [{status: null}];
+process.shards = new Collection();
 
 //Routes
 const statuspageRoute = require('./routes/StatuspageRoute');
@@ -28,6 +29,8 @@ app.use(cookieParser());
 app.use(helmet());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// States: 0: Ready and Operational, 1: Having Issues,
 
 app.use('/status', statuspageRoute);
 app.use('/api/shards', apiShardStatsRoute);
@@ -46,8 +49,12 @@ class Webpanel {
             process.instance = this;
         });
 
-        io.on('connection', async client => {
+        io.on('connection', async socket => {
             process.io = io;
+
+            process.shards.forEach(shard => {
+                socket.emit('shardStatusUpdate', shard);
+            });
         });
     }
 
@@ -68,7 +75,7 @@ class Webpanel {
     }
 
     log(type, title, message) {
-        fancyLog(`[Webpanel] [${type}] [${title}] ${message}`);
+        console.log(`[ Webpanel ] [`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
     }
 }
 

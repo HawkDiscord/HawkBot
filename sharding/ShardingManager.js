@@ -2,8 +2,9 @@ const cpuCount = require('os').cpus().length;
 const superagent = require('superagent');
 const { EventEmitter } = require('events');
 const BotSharder = require("./BotSharder");
-const fancyLog = require('fancy-log');
 const path = require('path');
+const colors = require('colors');
+const timeout = require('async-timeout');
 let Main;
 let Args;
 let Token;
@@ -40,13 +41,14 @@ class ShardingManager extends EventEmitter {
                 this.lShardsPerWorker = Math.ceil(this.lTotalShards / cpuCount);
             this.workerCount = Math.ceil(this.lTotalShards / this.lShardsPerWorker);
 
-            fancyLog('[ClusterManager] **************');
-            fancyLog(`[ClusterManager] * Shards: ${this.lTotalShards}`);
-            fancyLog(`[ClusterManager] * Workers: ${this.workerCount}`);
-            fancyLog(`[ClusterManager] * S/W: ${this.lShardsPerWorker}`);
-            fancyLog('[ClusterManager] **************');
+            console.log(`[ `.white + `ClusterManager`.green + ` ] **************`);
+            console.log(`[ `.white + `ClusterManager`.green + ` ] * Shards: ${this.lTotalShards}`);
+            console.log(`[ `.white + `ClusterManager`.green + ` ] * Workers: ${this.workerCount}`);
+            console.log(`[ `.white + `ClusterManager`.green + ` ] * S/W: ${this.lShardsPerWorker}`);
+            console.log(`[ `.white + `ClusterManager`.green + ` ] **************`);
             
             for(let i = 0; i < this.workerCount; i++) {
+                await timeout(5000);
                 let shardStart = i * this.lShardsPerWorker;
                 let shardEnd = ((i + 1) * this.lShardsPerWorker) - 1;
                 if(shardEnd > this.lTotalShards - 1)
@@ -55,8 +57,8 @@ class ShardingManager extends EventEmitter {
                 const totalShards = this.lTotalShards;
                 const shardsPerWorker = this.lShardsPerWorker;
                 Object.assign(worker, { type: 'bot', shardStart, shardEnd, totalShards, shardsPerWorker});
-                let botSharder = new BotSharder(worker);
 
+                let botSharder = new BotSharder(worker);
                 botSharder.on('started', () => {
                     this.emit('workerStarted', worker);
                 });
@@ -92,5 +94,3 @@ if(!cluster.isMaster) {
 }
 
 module.exports = ShardingManager;
-
-

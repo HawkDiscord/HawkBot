@@ -33,10 +33,14 @@ class LoadingManager {
      * @param {string} path - the path to the commandfile
      */
     async loadCommand(path) {
-        let command = require(path);
+        delete require.cache[require.resolve(path)];
+        let command = new (require(path))(this.client);
         if(!command)
-            return console.log('penis');
+            return;
         this.client.commands[command.name] = command;
+        command.aliases.forEach(alias => {
+            this.client.commands[alias] = command;
+        });
     }
 
     /**
@@ -51,7 +55,6 @@ class LoadingManager {
             const commandModule = new(require(moduleItem.path))(this.client);
             if(commandModule instanceof Module) {
                 this.client.modules[commandModule.name] = commandModule;
-                this.client.info('ModuleLoader', `Loaded '${commandModule.name}' Module`);
 
                 klaw(`${commandModule.pathToCommands}`).on('data', commandItem => {
                     const commandFile = path.parse(commandItem.path);
@@ -64,7 +67,6 @@ class LoadingManager {
                         command.aliases.forEach(alias => {
                             this.client.commands[alias] = command;
                         });
-                        this.client.info('CommandLoader', `Loaded '${command.name}'(${command.aliases.length}) Command`);
                     }                                                            
                 });                                                                                        
             }
@@ -79,7 +81,6 @@ class LoadingManager {
             const eventFile = path.parse(eventItem.path);
             if (!eventFile.ext || eventFile.ext !== '.js')
                 return;
-            this.client.info('EventLoader', `Loaded '${eventFile.name}' Event`);
             delete require.cache[require.resolve(eventItem.path)];
             const event = require(eventItem.path);
             this.client.removeAllListeners(eventFile.name);
@@ -103,7 +104,6 @@ class LoadingManager {
             files.forEach(file => {
                 let invoke = file.split('.')[0];
                 this.client.locales[invoke] = JSON.parse(fs.readFileSync(`${__dirname}/../../data/locales/${file}`));
-                this.client.info('LOCALE', `Intialised '${invoke}'`);
             });
         });
     }
