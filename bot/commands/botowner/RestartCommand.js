@@ -20,6 +20,10 @@ class RestartCommand extends Command {
                     description: 'Restarts all shards.'
                 }
             ],
+            permissions: {
+                botowner: true,
+                permission: 'none'
+            },
             path: __filename
         });
     }
