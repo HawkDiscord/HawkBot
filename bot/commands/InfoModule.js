@@ -1,6 +1,6 @@
 const Module = require('../command/Module');
 
-class GeneralModule extends Module {
+class InfoModule extends Module {
     constructor(client){
         super(client,{
             name: 'info',
@@ -11,4 +11,4 @@ class GeneralModule extends Module {
     }
 }
 
-module.exports = GeneralModule;
+module.exports = InfoModule;
