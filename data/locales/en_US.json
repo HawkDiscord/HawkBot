@@ -23,6 +23,18 @@
             "title": "Hawk - Help",
             "description": "Loaded a total of %modules% modules with %commands% commands.",
             "footer": "Type '%prefix%help <command>' for detailed information about a command."
+        },
+        "command": {
+            "noCommand": "There is no command with that name/alias.",
+            "usage": "Usage",
+            "aliases": "Aliases",
+            "permission": "Permission"
         }
+    },
+
+    "prefix": {
+        "current": "Current prefix is `%prefix%`",
+        "length": "The maximum allowed prefix length is 5.",
+        "success": "Successfully changed the prefix."
     }
 }

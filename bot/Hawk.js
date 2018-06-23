@@ -1,6 +1,4 @@
-const Eris = require("eris-additions")(require("eris"),
-    { enabled: ["Channel.awaitMessages", "Member.bannable", "Member.kickable", "Member.punishable", "Role.addable", "Channel.sendMessage", "Message.guild"] }
-);
+const Eris = require("eris-additions")(require("eris"));
 const rethinkdb = require('../util/rethink');
 const fs = require('fs');
 const colors = require('colors');
@@ -17,7 +15,6 @@ class Hawk extends Eris.Client {
         }
 
         super(token, options);
-
         this.worker = cluster.worker;
         this.shard = {
             id: this.worker.shardStart
@@ -30,6 +27,7 @@ class Hawk extends Eris.Client {
         this.config = config;
         this.info(`Core`, `Successfully launched client with shards from ${this.worker.shardStart} to ${this.worker.shardEnd}!`);
         this.functions = require('../util/functions');
+        this.permissions = require('./core/PermissionsConstants.js')
         this.update(3);
         this.rethink = await rethinkdb.connectToRethink();
         await rethinkdb.createDefaults(this.rethink);
