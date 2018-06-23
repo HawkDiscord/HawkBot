@@ -24,10 +24,7 @@ class ReloadCommand extends Command {
                     description: 'Reloads predefined features.'
                 }
             ],
-            permissions: {
-                botowner: true,
-                permission: 'none'
-            },
+            botowner: true,
             path: __filename                                               
         });
     }
@@ -40,8 +37,18 @@ class ReloadCommand extends Command {
             case '-c':
                 if(!args[1])
                     return;
-                await this.client.loadingManager.loadCommand(this.client.commands[args[1]].path);
-                return msg.channel.createMessage((lang.reload.cmd).replace("%cmd%",args[1]));
+                await this.client.loadingManager.loadCommand(this.client.commands.get(args[1]).path);
+                return msg.channel.createMessage((lang.reload.cmd).replace("%cmd%", args[1]));
+            case '-m':
+                break;
+            case '-f':
+                if(args[1] === 'lang') {
+                    this.client.loadingManager.loadLocales();
+                    return msg.channel.createMessage(`${this.client.emotes.get('check')}Reloaded all language files.`);
+                }
+                break;
+            default:
+                return msg.channel.createMessage(`${this.client.emotes.get('warning')}Wrong parameters.`);
        }
     }
 }
