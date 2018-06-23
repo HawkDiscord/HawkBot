@@ -33,10 +33,7 @@ async function run(client, msg) {
     
     if(!invoke || invoke === '')
         return await msg.channel.createMessage(`${client.emotes.get("info")} ${lang.commandParser.noInvoke.replace('%prefix%', guild.prefix)}`);
-
-    let cmd;
-    if (invoke in client.commands)
-        cmd = client.commands[invoke];
+    let cmd = client.commands.get(invoke);
     if(!cmd)
         return;
     cmd.run(msg, args, lang).catch(error => {

@@ -21,7 +21,7 @@
     "help": {
         "general": {
             "title": "Hawk - Help",
-            "description": "Loaded a total of %modules% modules with %command% aliases.",
+            "description": "Loaded a total of %modules% modules with %commands% commands.",
             "footer": "Type '%prefix%help <command>' for detailed information about a command."
         }
     }
