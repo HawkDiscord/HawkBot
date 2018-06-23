@@ -1,6 +1,5 @@
 const hawkGuild = require('../entities/HawkGuild.js');
 const hawkUser = require('../entities/HawkUser.js');
-const Eris = require('eris')
 
 async function run(client, msg) {
     if(msg.author.bot || !msg.guild)
@@ -34,10 +33,7 @@ async function run(client, msg) {
     
     if(!invoke || invoke === '')
         return await msg.channel.createMessage(`${client.emotes.get("info")} ${lang.commandParser.noInvoke.replace('%prefix%', guild.prefix)}`);
-
-    let cmd;
-    if (invoke in client.commands)
-        cmd = client.commands[invoke];
+    let cmd = client.commands.get(invoke);
     if(!cmd)
         return;
     cmd.run(msg, args, lang).catch(error => {

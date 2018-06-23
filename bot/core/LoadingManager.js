@@ -18,9 +18,10 @@ class LoadingManager {
      * Calls all load functions
      */
     async loadAll() {
-        this.client.commands = {};
-        this.client.modules = {};
+        this.client.commands = new Eris.Collection();
+        this.client.modules = new Eris.Collection();
         this.client.emotes = new Eris.Collection();
+        this.client.rawCommands = new Eris.Collection();
         this.client.locales = {};
         this.loadCommands();
         this.loadEvents();
@@ -37,9 +38,9 @@ class LoadingManager {
         let command = new (require(path))(this.client);
         if(!command)
             return;
-        this.client.commands[command.name] = command;
+        this.client.commands.set(command.name, command);
         command.aliases.forEach(alias => {
-            this.client.commands[alias] = command;
+            this.client.commands.set(alias, command);
         });
     }
 
@@ -54,7 +55,8 @@ class LoadingManager {
             delete require.cache[require.resolve(moduleItem.path)];
             const commandModule = new(require(moduleItem.path))(this.client);
             if(commandModule instanceof Module) {
-                this.client.modules[commandModule.name] = commandModule;
+                commandModule.commands = [];
+                this.client.modules.set(commandModule.name, commandModule);
 
                 klaw(`${commandModule.pathToCommands}`).on('data', commandItem => {
                     const commandFile = path.parse(commandItem.path);
@@ -63,9 +65,13 @@ class LoadingManager {
                     delete require.cache[require.resolve(commandItem.path)];
                     const command = new (require(commandItem.path))(this.client);
                     if(command instanceof Command) {
-                        this.client.commands[command.name] = command;
+                        command.module = commandModule.name;
+                        if(commandModule.name !== 'botowner')
+                            this.client.rawCommands.set(command.name, command.name);
+                        this.client.commands.set(command.name, command);
+                        this.client.modules.get(commandModule.name).commands.push(command.name);
                         command.aliases.forEach(alias => {
-                            this.client.commands[alias] = command;
+                            this.client.commands.set(alias, command);
                         });
                     }                                                            
                 });                                                                                        
