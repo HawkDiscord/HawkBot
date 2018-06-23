@@ -24,6 +24,10 @@ class ReloadCommand extends Command {
                     description: 'Reloads predefined features.'
                 }
             ],
+            permissions: {
+                botowner: true,
+                permission: 'none'
+            },
             path: __filename                                               
         });
     }

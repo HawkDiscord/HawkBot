@@ -36,9 +36,8 @@ class Command {
         this.aliases = options.aliases || [];
         this.description = options.description || 'No description provided';
         this.usages = options.usages || [{usage: '', description: this.description}];
-        this.permissions = options.permissions || {botowner: false, default: true};
+        this.permissions = options.permissions || { botowner: false, permission: 'none' };
         this.cooldown = options.cooldown || 0;
-
         this.path = options.path ||__filename;
         this.type = 'command';
     }
