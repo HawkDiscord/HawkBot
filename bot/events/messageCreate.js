@@ -4,7 +4,7 @@ const hawkUser = require('../entities/HawkUser.js');
 async function run(client, msg) {
     if(msg.author.bot || !msg.guild)
         return;
-    
+            
     await hawkGuild.check(client, msg.guild);
     await hawkGuild.reload(client, msg.guild);
     await hawkUser.check(client, msg.author);
@@ -28,7 +28,7 @@ async function run(client, msg) {
     if(!prefix)
         return;
     const args = msg.content.slice(prefix.length).trim().split(/ +/g);
-    const invoke = args.shift();
+    const invoke = args.shift().toLowerCase();
     let lang = client.locales[author.language];
     
     if(!invoke || invoke === '')
