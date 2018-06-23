@@ -7,6 +7,7 @@
  * @param {array} options.aliases - the command aliases
  * @param {string} options.description - the command description
  * @param {array} options.usages - array with all usages of the command
+ * @param {string} options.path string with __filename to the Command
  * @example
  * options.usages = [
  *    {
@@ -38,7 +39,7 @@ class Command {
         this.permissions = options.permissions || {botowner: false, default: true};
         this.cooldown = options.cooldown || 0;
 
-        this.path = __filename;
+        this.path = options.path ||__filename;
         this.type = 'command';
     }
 

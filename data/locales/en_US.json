@@ -4,12 +4,17 @@
     },
 
     "reload": {
-        "all": ":white_check_mark: Reloaded the bot."
+        "all": ":white_check_mark: Reloaded the bot.",
+        "cmd": ":white_check_mark: Reloaded the %cmd% command."
     },
 
     "restart": {
         "currentShard": "Restarting current shard.",
         "allShards": "Restarting all shards.",
         "specificShard": "Restarting shard %shard%."
+    },
+
+    "ping": {
+        "currentPing": "The current latency between the bot and the Discord API is **%ping%**ms."
     }
 }

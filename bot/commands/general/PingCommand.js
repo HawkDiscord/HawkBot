@@ -11,12 +11,13 @@ class PingCommand extends Command {
                     usage: '',
                     description : 'Returns the Bot Heartbeat ping in ms'
                 }
-            ]
+            ],
+            path: __filename
         })
     }
 
     async run(message, args, lang) {
-        
+        return message.channel.createMessage(this.client.emotes.get("info")+" "+(lang.ping.currentPing).replace("%ping%",this.client.shards.get(0).latency));
     }
 }
 

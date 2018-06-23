@@ -19,7 +19,8 @@ class RestartCommand extends Command {
                     usage: '-a',
                     description: 'Restarts all shards.'
                 }
-            ]
+            ],
+            path: __filename
         });
     }
 
