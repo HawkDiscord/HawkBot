@@ -33,10 +33,14 @@ class LoadingManager {
      * @param {string} path - the path to the commandfile
      */
     async loadCommand(path) {
-        let command = require(path);
+        delete require.cache[require.resolve(path)];
+        let command = new (require(path))(this.client);
         if(!command)
             return;
         this.client.commands[command.name] = command;
+        command.aliases.forEach(alias => {
+            this.client.commands[alias] = command;
+        });
     }
 
     /**
