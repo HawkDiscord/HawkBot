@@ -1,0 +1,34 @@
+body {
+    background-color: #23272A !important;
+}
+
+.hawk-con {
+    margin-bottom: 25px;
+    margin: 0 auto -50px;
+}
+
+.hawk-nav-logo {
+    margin-right: 10px;
+}
+
+.hawk-footer,
+.push {
+    height: 50px;
+    margin-bottom: 25px;
+}
+
+.footer-text {
+    color: #99AAB5;
+    text-align: center;
+}
+
+.footer-text a {
+    transition: .3s;
+    color: #99AAB5;
+    text-decoration: none;
+}
+
+.footer-text a:hover {
+    color: #ffffff;
+    text-decoration: none;
+}

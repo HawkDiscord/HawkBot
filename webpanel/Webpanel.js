@@ -19,6 +19,7 @@ process.rethink = rethink;
 process.shards = new Collection();
 
 //Routes
+const indexRoute = require('./routes/IndexRoute');
 const statuspageRoute = require('./routes/StatuspageRoute');
 const apiShardStatsRoute = require('./routes/ShardStatsRoute');
 
@@ -32,6 +33,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // States: 0: Ready and Operational, 1: Having Issues,
 
+app.use('/', indexRoute);
 app.use('/status', statuspageRoute);
 app.use('/api/shards', apiShardStatsRoute);
 
@@ -54,6 +56,14 @@ class Webpanel {
 
             process.shards.forEach(shard => {
                 socket.emit('shardStatusUpdate', shard);
+            });
+
+            socket.on('requestOfflineShardCount', function() {
+                var offlineShards = 0;
+                process.shards.forEach(shard => {
+                    if(shard.status != 0) offlineShards++;
+                });
+                socket.emit('updateOfflineShardCount', `${offlineShards}`);
             });
         });
     }
