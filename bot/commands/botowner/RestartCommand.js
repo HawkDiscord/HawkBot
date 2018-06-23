@@ -42,7 +42,7 @@ class RestartCommand extends Command {
                 break;
             case '-a':
                 await msg.channel.createMessage(`${this.client.emotes.get("info")} ${lang.restart.allShards}`);
-                console.log(await process.output({
+                (await process.output({
                     type: 'all_shards',
                     input: () => process.exit(1)
                 }));

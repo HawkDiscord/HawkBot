@@ -27,7 +27,7 @@ class PingCommand extends Command {
                     icon_url: this.client.user.avatarURL
                 },
                 color: 0x14bc05,
-                description: lang.help.general.description.replace('%modules%', this.client.modules.size).replace('%commands%', this.client.commands.size);
+                description: lang.help.general.description.replace('%modules%', this.client.modules.size).replace('%commands%', this.client.commands.size),
                 footer: {
                     
                 }
