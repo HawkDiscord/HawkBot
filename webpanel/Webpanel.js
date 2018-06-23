@@ -22,6 +22,9 @@ process.shards = new Collection();
 const indexRoute = require('./routes/IndexRoute');
 const statuspageRoute = require('./routes/StatuspageRoute');
 const apiShardStatsRoute = require('./routes/ShardStatsRoute');
+const userProfileRoute = require('./routes/UserprofileRoute');
+const loginRoute = require('./routes/LoginRoute');
+const logoutRoute = require('./routes/LogoutRoute');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -36,6 +39,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/', indexRoute);
 app.use('/status', statuspageRoute);
 app.use('/api/shards', apiShardStatsRoute);
+app.use('/profile', userProfileRoute);
+app.use('/login', loginRoute);
+app.use('/logout', logoutRoute);
 
 class Webpanel {
     constructor(sharder) {
