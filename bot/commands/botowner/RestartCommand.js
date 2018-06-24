@@ -48,6 +48,8 @@ class RestartCommand extends Command {
                     input: () => process.exit(1)
                 }));
                 break;
+            default:
+                return this.sendHelp(msg, lang);
        }
     }
 }

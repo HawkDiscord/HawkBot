@@ -15,7 +15,8 @@ module.exports = {
     async _create(client, guild) {
         let newGuild = {
             id: guild.id,
-            prefix: client.config.bot.prefixes.default
+            prefix: client.config.bot.prefixes.default,
+            autorole: 'none'
         }
         await client.rethink.table('guilds').insert(newGuild).run();
         client.info('Database', `Inserted new guild: ${guild.id}`);
