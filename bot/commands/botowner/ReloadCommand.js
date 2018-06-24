@@ -12,10 +12,6 @@ class ReloadCommand extends Command {
                     description: 'Reloads the full bot.'
                 },
                 {
-                    usage: '-m <module>',
-                    description: 'Reloads a module.'
-                },
-                {
                     usage: '-c <command>',
                     description: 'Reloads a command.'
                 },
@@ -36,19 +32,16 @@ class ReloadCommand extends Command {
                 return msg.channel.createMessage(lang.reload.all);
             case '-c':
                 if(!args[1])
-                    return;
+                    return this.sendHelp(msg, lang);
                 await this.client.loadingManager.loadCommand(this.client.commands.get(args[1]).path);
-                return msg.channel.createMessage((lang.reload.cmd).replace("%cmd%", args[1]));
-            case '-m':
-                break;
+                return msg.channel.createMessage((lang.reload.cmd).replace('%cmd%', args[1]));
             case '-f':
                 if(args[1] === 'lang') {
                     this.client.loadingManager.loadLocales();
                     return msg.channel.createMessage(`${this.client.emotes.get('check')}Reloaded all language files.`);
                 }
-                break;
             default:
-                return msg.channel.createMessage(`${this.client.emotes.get('warning')}Wrong parameters.`);
+                return this.sendHelp(msg, lang);
        }
     }
 }

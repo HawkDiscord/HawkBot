@@ -6,3 +6,5 @@ data/config\.json
 out/
 
 \.vs/
+
+package-lock\.json

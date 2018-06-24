@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-    res.sendStatus(200);
+    res.clearCookie('hawkToken');
+    res.redirect(process.config.webpanel.baseurl);
 });
 
 module.exports = router;

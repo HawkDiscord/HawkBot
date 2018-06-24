@@ -36,5 +36,20 @@
         "current": "Current prefix is `%prefix%`",
         "length": "The maximum allowed prefix length is 5.",
         "success": "Successfully changed the prefix."
+    },
+
+    "clear": {
+        "maxAmount": "The maximum amount is %amount%.",
+        "cleared": "Successfully cleared `%amount%` messages.",
+        "noPerms": "I need the MANAGE_MESSAGE permissions to delete messages."
+    },
+
+    "autorole": {
+        "none": "Autorole is not enabled.",
+        "current": "The current autorole is `%role%`",
+        "error": "An error occurred. Please try again.",
+        "set": "Successfully set the new autorole.",
+        "notEnabled": "Autorole is already disabled.",
+        "disabled": "Autorole is now disabled."
     }
 }

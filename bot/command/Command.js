@@ -49,6 +49,50 @@ class Command {
     async run(message, args, lang) {
         throw new Error(`[Command] ${this.name} doesn't provide a run Method.`);
     }
+
+    async sendHelp(msg, lang) {
+        let embed = {
+            author: {
+                name: `${this.displayName} Command - Help`,
+                icon_url: this.client.user.avatarURL
+            },
+            color: 0x14bc05,
+            description: this.description,
+            fields: []
+        };
+
+        let usageVal = '';
+        this.usages.forEach(usage => {
+            usageVal += `\`${msg.guild.prefix}${this.name} ${usage.usage}\` - ${usage.description} \n`;
+        });
+        embed.fields.push({
+            name: lang.help.command.usage,
+            value: usageVal,
+            inline: false
+        });
+
+        if (this.aliases.length > 0) {
+            let aliasValue = '';
+            this.aliases.forEach(alias => {
+                aliasValue += '`' + alias + '` ';
+            });
+            embed.fields.push({
+                name: lang.help.command.aliases,
+                value: aliasValue,
+                inline: false
+            });
+        }
+
+        embed.fields.push({
+            name: lang.help.command.permission,
+            value: `\`${this.permissions}\``,
+            inline: false
+        });
+
+        msg.channel.createMessage({
+            embed: embed
+        });
+    }
 }
 
 module.exports = Command
