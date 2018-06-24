@@ -7,6 +7,16 @@ class PrefixCommand extends Command {
             name: 'prefix',
             displayName: 'Prefix',
             description: 'Setup the guilds prefix',
+            usages: [
+                {
+                    usage: '',
+                    description: 'Shows the current prefix'
+                },
+                {
+                    usage: 'set <prefix>',
+                    description: 'Changes the guilds prefix'
+                }
+            ],
             permissions: [client.permissions.MANAGE_GUILD],
             path: __filename
         })

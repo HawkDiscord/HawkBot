@@ -30,48 +30,7 @@ class HelpCommand extends Command {
         let command = this.client.commands.get(args[0]);
         if(!command)
             return message.channel.createMessage(`${this.client.emotes.get('warning')} ${lang.help.command.noCommand}`);
-    
-        let embed = {
-            author: {
-                name: `${command.displayName} - Command`,
-                icon_url: this.client.user.avatarURL
-            },
-            color: 0x14bc05,
-            description: command.description,
-            fields: []
-        };
-
-        let usageVal = '';
-        command.usages.forEach(usage => {
-            usageVal += `\`${message.guild.prefix}${command.name} ${usage.usage}\` - ${usage.description} \n`;
-        });
-        embed.fields.push({
-            name: lang.help.command.usage,
-            value: usageVal,
-            inline: false
-        });
-
-        if(command.aliases.length > 0) {
-            let aliasValue = '';
-            command.aliases.forEach(alias => {
-                aliasValue += '`' + alias + '` ';
-            });
-            embed.fields.push({
-                name: lang.help.command.aliases,
-                value: aliasValue,
-                inline: false
-            });
-        }
-
-        embed.fields.push({
-            name: lang.help.command.permission,
-            value: `\`${command.permissions.permission}\``,
-            inline: false
-        });
-
-        message.channel.createMessage({
-            embed: embed
-        });
+        return command.sendHelp(message, lang);
     }
 
     async sendOverview(message, args, lang) {

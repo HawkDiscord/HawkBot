@@ -36,5 +36,11 @@
         "current": "Current prefix is `%prefix%`",
         "length": "The maximum allowed prefix length is 5.",
         "success": "Successfully changed the prefix."
+    },
+
+    "clear": {
+        "maxAmount": "The maximum amount is %amount%.",
+        "cleared": "Successfully cleared `%amount%` messages.",
+        "noPerms": "I need the MANAGE_MESSAGE permissions to delete messages."
     }
 }

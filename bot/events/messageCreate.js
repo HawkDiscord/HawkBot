@@ -11,6 +11,9 @@ async function run(client, msg) {
 
     let guild = client.servers.get(msg.guild.id);
     let author = client.members.get(msg.author.id);
+    let self = msg.guild.members.get(client.user.id);
+
+    msg.self = self;
 
     if (!guild || !author)
         return await run(client, msg);
@@ -36,12 +39,18 @@ async function run(client, msg) {
     let cmd = client.commands.get(invoke);
     if(!cmd)
         return;
-    if(!guild.members.get(client.user.id).permission.has(client.permissions.SEND_MESSAGES))
+    if(!self.permission.has(client.permissions.SEND_MESSAGES))
         return;
-    if(!msg.member.permission.has(client.permissions.ADMINISTRATOR)) {
-        for(let permission of cmd.permissions) {
-            if(!msg.member.permission.has(permission))
-                return msg.channel.createMessage(`${client.emotes.get('warning')} You don't have enough permissions to execute this command.`);
+    if(cmd.botowner === true) {
+        if(client.config.owners.indexOf(author.id) <= -1)
+            return msg.channel.createMessage(`${client.emotes.get('warning')} You don't have enough permissions to execute this command.`);
+    } else {
+        //Check permissions that are needed to exeute the command
+        if (!msg.member.permission.has(client.permissions.ADMINISTRATOR) && client.config.owners.indexOf(author.id) > -1) {
+            for (let permission of cmd.permissions) {
+                if (!msg.member.permission.has(permission))
+                    return msg.channel.createMessage(`${client.emotes.get('warning')} You don't have enough permissions to execute this command.`);
+            }
         }
     }
     cmd.run(msg, args, lang).catch(error => {
