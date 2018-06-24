@@ -266,6 +266,10 @@ html, body {
 .hawk-footer,
 .push {
     height: 50px;
+    position: relative;
+    bottom: 0;
+    margin: auto;
+    text-align: center;
 }
 
 .footer-text {

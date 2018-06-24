@@ -7,9 +7,9 @@
             <li><a href=""><i class="fas fa-home"></i> Home</a></li>
             <li><a href="features/"><i class="fas fa-list"></i> Features</a></li>
             <li><a href="dashboard/"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-plus-square"></i> Invite</a></li>
-            <li><a href="#"><i class="fab fa-discord"></i> Support</a></li>
-            <li><a href="#"><i class="fas fa-dollar-sign"></i> Donate</a></li>
+            <li><a href="https://discordapp.com/api/oauth2/authorize?client_id=457994165637349387&permissions=8&scope=bot"><i class="fas fa-plus-square"></i> Invite</a></li>
+            <li><a href="https://discord.gg/dv5SV9d"><i class="fab fa-discord"></i> Support</a></li>
+            <li><a href="https://patreon.com/hawkbot"><i class="fas fa-dollar-sign"></i> Donate</a></li>
             <% if(typeof user !== 'undefined') { %>
                 <li class="profile-tab nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,7 +17,7 @@
                         <p class="tag"><%= user.username %>#<%= user.discriminator %></p>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="userDropdown">
-                        <a class="dropdown-item disabled" href="#">Profile</a>
+                        <a class="dropdown-item disabled" href="profile/">Profile</a>
                         <a class="dropdown-item" href="<%= page.baseurl %>/logout">Logout</a>
                     </div>
                 </li>
