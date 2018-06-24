@@ -1,0 +1,30 @@
+<nav class="navbar hawk-nav animated fadeInDown" role="navigation">
+    <div class="navbar-header">
+        <a href="https://web.hawkbot.xyz/" class="navbar-brand hawk-nav-logo"><img class="hawk-nav-logo-img animated rotateIn" src="assets/img/Logo.png" />Hawk's Dashboard</a>
+    </div>
+    <div class="hawk-nav-list">
+        <ul>
+            <li><a href=""><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="features/"><i class="fas fa-list"></i> Features</a></li>
+            <li><a href="dashboard/"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-plus-square"></i> Invite</a></li>
+            <li><a href="#"><i class="fab fa-discord"></i> Support</a></li>
+            <li><a href="#"><i class="fas fa-dollar-sign"></i> Donate</a></li>
+            <% if(typeof user !== 'undefined') { %>
+                <li class="profile-tab nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="https://cdn.discordapp.com/avatars/<%= user.id %>/<%= user.avatar %>.jpg" class="avatar">
+                        <p class="tag"><%= user.username %>#<%= user.discriminator %></p>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="userDropdown">
+                        <a class="dropdown-item disabled" href="#">Profile</a>
+                        <a class="dropdown-item" href="<%= page.baseurl %>/logout">Logout</a>
+                    </div>
+                </li>
+            <% } %>
+        </ul>
+        <div class="hawk-nav-btn">
+            <a onclick="initMenuBar();"><i class="fas fa-bars"></i></a>
+        </div>
+    </div>
+</nav>

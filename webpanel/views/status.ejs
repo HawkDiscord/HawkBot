@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title><%= page.title %> - <%= page.subtitle %></title>
+
+        <meta charset="UTF-8">
+
+        <meta name="author" content="Rxsto">
+        <meta name="publisher" content="Hawk DevTeam">
+        <meta name="copyright" content="Hawk DevTeam">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta http-equiv="content-language" content="en">
+        <meta name="robots" content="index, follow">
+
+        <link rel="shortcut icon" type="image/x-icon" style="border-radius: 100%;" href="assets/img/Favicon.png">
+
+        <link rel="stylesheet" href="assets/css/status.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.5.2/animate.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container hawk-con">
+            <main class="hawk-status">
+                <div class="title-box animated fadeInDown">
+                    <p class="hawk-status-title">Hawk<img class="hawk-status-logo animated rotateIn" src="assets/img/Logo.png">Status</p>
+                </div>
+
+                <div class="list-group">
+                    <li id="all-shards" class="list-group-item error animated fadeInDown">Loading...</li>
+                </div>
+
+                <br/><br/>
+
+                <div class="list-group">
+                    <% for(let i = 0; i < sharder.lTotalShards; i++) { %>
+                        <li id="shard-<%= i %>" class="list-group-item error animated fadeInUp">Shard #<%= (i+1) %> » Loading...</li>
+                    <% } %>
+                </div>
+                <div class="push"></div>
+            </main>
+            <footer class="hawk-footer animated fadeInUp">
+                <p class="footer-text">&copy; Hawk DevTeam 2018 - All rights reserved - Designed by <a target="_blank" href="https://rxsto.me/">@Rxsto#4224</a></p>
+            </footer>
+        </div>
+
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="assets/js/webSocket.js"></script>
+    </body>
+</html>

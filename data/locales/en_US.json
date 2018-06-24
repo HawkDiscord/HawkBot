@@ -1,0 +1,46 @@
+{
+    "commandParser": {
+        "noInvoke": "The current prefix is `%prefix%`"
+    },
+
+    "reload": {
+        "all": ":white_check_mark: Reloaded the bot.",
+        "cmd": ":white_check_mark: Reloaded the %cmd% command."
+    },
+
+    "restart": {
+        "currentShard": "Restarting current shard.",
+        "allShards": "Restarting all shards.",
+        "specificShard": "Restarting shard %shard%."
+    },
+
+    "ping": {
+        "currentPing": "The current latency between the bot and the Discord API is **%ping%**ms."
+    },
+
+    "help": {
+        "general": {
+            "title": "Hawk - Help",
+            "description": "Loaded a total of %modules% modules with %commands% commands.",
+            "footer": "Type '%prefix%help <command>' for detailed information about a command."
+        },
+        "command": {
+            "noCommand": "There is no command with that name/alias.",
+            "usage": "Usage",
+            "aliases": "Aliases",
+            "permission": "Permission"
+        }
+    },
+
+    "prefix": {
+        "current": "Current prefix is `%prefix%`",
+        "length": "The maximum allowed prefix length is 5.",
+        "success": "Successfully changed the prefix."
+    },
+
+    "clear": {
+        "maxAmount": "The maximum amount is %amount%.",
+        "cleared": "Successfully cleared `%amount%` messages.",
+        "noPerms": "I need the MANAGE_MESSAGE permissions to delete messages."
+    }
+}
