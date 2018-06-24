@@ -19,7 +19,7 @@ class ClearCommand extends Command {
             ],
             permissions: [client.permissions.MANAGE_MESSAGES],
             path: __filename
-        })
+        });
     }
 
     async run(msg, args, lang) {
