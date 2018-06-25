@@ -19,7 +19,7 @@ class ClearCommand extends Command {
             ],
             permissions: [client.permissions.MANAGE_MESSAGES],
             path: __filename
-        })
+        });
     }
 
     async run(msg, args, lang) {
@@ -29,7 +29,17 @@ class ClearCommand extends Command {
             return this.sendHelp(msg, lang);
         if(msg.mentions.length === 1)
             return this.clearUserMessages(msg, args, lang);
-        msg.channel.deleteMessages(ids);
+        return this.clearMessages(msg, args, lang);
+    } 
+
+    async clearMessages(msg, args, lang) {
+        let amount = parseInt(args[0]);
+        if (!amount)
+            return this.sendHelp(msg, lang);
+        if (amount > 500)
+            return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.clear.maxAmount.replace('%amount%', 500)}`);
+        let deleted = await msg.channel.purge(amount);
+        msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.clear.cleared.replace('%amount%', deleted)}`);
     }
 
     async clearUserMessages(msg, args, lang) {
@@ -41,14 +51,10 @@ class ClearCommand extends Command {
             return this.sendHelp(msg, lang);
         if(amount > 500)
             return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.clear.maxAmount.replace('%amount%', 500)}`);
-        let rawMessages = await msg.channel.getMessages(amount);
-        let messageIds = [];
-        rawMessages.forEach(message => {
-            if(message.author.id === userId)
-                messageIds.push(message.id);
+        let deleted = await msg.channel.purge(amount, m => {
+            return m.author.id === userId;
         });
-        msg.channel.deleteMessages(messageIds);
-        msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.clear.cleared.replace('%amount%', messageIds.length)}`);
+        msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.clear.cleared.replace('%amount%', deleted)}`);
     }
 }
 

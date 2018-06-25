@@ -17,7 +17,7 @@ module.exports = (client) => {
     }
 
     shards.forEach(shard => {
-        console.log(`[`.white + ` INFO `.green + `] `.white + `[`.white + ` Shard `.cyan + `] `.white + `The shard with the id ${shard} has successfully started!`.white);
+        console.log(`[`.white + ` INFO `.green + `] `.white + `[`.white + ` Shard `.cyan + `] `.white + `The shard with the id ${shard} has successfully started with ${client.guilds.size} guilds!`.white);
         updateShardStatus(shard, 0);
     });
 }
