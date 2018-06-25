@@ -53,12 +53,12 @@ class SayCommand extends Command {
             if(options.has('footer')){
                 embed.footer = {
                     text: options.get('footer')
-                }
+                };
             }
             if(options.has('color')){
                 let color = options.get('color');
                 if(isNaN(color)) {
-                    return message.channel.sendMessage(lang.say.invalidColorCode)
+                    return message.channel.sendMessage(lang.say.invalidColorCode);
                 }
                 embed.color = parseInt('0x' + color);
             }
