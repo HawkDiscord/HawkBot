@@ -15,17 +15,24 @@ class SayCommand extends Command {
             name: 'say',
             displayName: 'Say',
             description: 'Send messages to channels with Hawk',
+            usages: [
+                
+                {
+                    usage: '[channel] <message>',
+                    description: 'Sends text a normal text message'
+                },
+                {
+                    usage: '[channel] <message> [-title <title> | -description <description> | -color <HEX color code> | -footer <footer>]',
+                    description: 'Sends an embed with all options you specified'
+                }
+            ],
             path: __filename
         });
     }
 
     async run(message, args, lang) {
         if(args.length == 0) {
-            return message.channel.createMessage(lang.say.usage).then((message) => {
-                setTimeout(() => {
-                    message.delete();
-                }, 1500);
-            });
+            return this.sendHelp(message, lang);
         }
         let channelId;
         if(message.channelMentions.length === 0){
