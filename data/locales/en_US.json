@@ -1,6 +1,7 @@
 {
     "commandParser": {
-        "noInvoke": "The current prefix is `%prefix%`"
+        "noInvoke": "The current prefix is `%prefix%`",
+        "noPermissions": "You don't have enough permissions to execute this command."
     },
 
     "reload": {

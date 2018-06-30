@@ -13,7 +13,6 @@ class Hawk extends Eris.Client {
             lastShardID: cluster.worker.shardEnd,
             maxShards: cluster.worker.totalShards
         }
-
         super(token, options);
         this.worker = cluster.worker;
         this.shard = {
@@ -23,7 +22,7 @@ class Hawk extends Eris.Client {
         global.bot = this;
     }
 
-    async load(doLaunch=false) {
+    async load(doLaunch = false) {
         this.config = config;
         this.info(`Core`, `Successfully launched client with shards from ${this.worker.shardStart} to ${this.worker.shardEnd}!`);
         this.functions = require('../util/functions');
@@ -35,9 +34,9 @@ class Hawk extends Eris.Client {
         this.members = new Eris.Collection();
         this.players = new Eris.Collection();
         this.update(4);
-        this.loadingManager = new (require('./core/LoadingManager'))(this);
+        this.loadingManager = new(require('./core/LoadingManager'))(this);
         this.loadingManager.loadAll();
-        if(doLaunch) {
+        if (doLaunch) {
             this.update(2);
             this.launch();
         }
@@ -74,27 +73,35 @@ class Hawk extends Eris.Client {
     log(type, title, message) {
         console.log(`[ `.white + `W - ${this.worker.id} | S - ${(this.worker.shardStart.toString().length == 1 ? "0" + this.worker.shardStart.toString() : this.worker.shardStart)} ] `.white + `[`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
     }
-    
+
     launch() {
         this.connect();
 
         this.on('ready', () => {
-            this.emit('launchNext');            
+            this.emit('launchNext');
         });
     }
 }
 
 cluster.worker.on("message", async msg => {
-    if(msg.type === "eval") {
+    if (msg.type === "eval") {
         try {
             let result = (await eval(msg.input));
-            process.send({ type: "output", result, id: msg.id });
-        } catch(err) {
-            process.send({ type: "output", error: err.stack, id: msg.id });
+            process.send({
+                type: "output",
+                result,
+                id: msg.id
+            });
+        } catch (err) {
+            process.send({
+                type: "output",
+                error: err.stack,
+                id: msg.id
+            });
         }
-    } else if(msg.type === "output") {
-            cluster.worker.emit("outputMessage", msg);
+    } else if (msg.type === "output") {
+        cluster.worker.emit("outputMessage", msg);
     }
-}); 
+});
 
 module.exports = Hawk;
