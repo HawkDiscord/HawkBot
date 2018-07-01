@@ -18,11 +18,11 @@ class SayCommand extends Command {
             usages: [
                 
                 {
-                    usage: '[channel] <text>',
+                    usage: '[#channel] <text>',
                     description: 'Sends a normal text message'
                 },
                 {
-                    usage: '[channel] [-title <text> | -description <text> | -color <HEX color code> | -footer <footer>]',
+                    usage: '[#channel] [-title <text> | -description <text> | -color <HEX color code> | -footer <footer>]',
                     description: 'Sends an embed with all options you specified'
                 }
             ],
