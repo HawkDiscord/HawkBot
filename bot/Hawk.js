@@ -1,4 +1,4 @@
-const Eris = require("eris-additions")(require("eris"));
+let Eris = require('eris-additions')(require('eris'));
 const rethinkdb = require('../util/rethink');
 const fs = require('fs');
 const colors = require('colors');
@@ -54,6 +54,8 @@ class Hawk extends Eris.Client {
         });
     }
 
+    //Logging
+
     info(title, message) {
         this.log('INFO', title, message);
     }
@@ -71,7 +73,7 @@ class Hawk extends Eris.Client {
     }
 
     log(type, title, message) {
-        console.log(`[ `.white + `W - ${this.worker.id} | S - ${(this.worker.shardStart.toString().length == 1 ? "0" + this.worker.shardStart.toString() : this.worker.shardStart)} ] `.white + `[`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
+        console.log(`[ `.white + `W - ${this.worker.id} | S - ${(this.worker.shardStart.toString().length == 1 ? '0' + this.worker.shardStart.toString() : this.worker.shardStart)} ] `.white + `[`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
     }
 
     launch() {

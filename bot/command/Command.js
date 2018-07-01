@@ -21,6 +21,7 @@
  *]
  * @param {boolean} options.botowner - whether the command should only be executable for botowners
  * @param {Array<Permission>} options.permissions - the command permissions
+ * @param {Array<Permission>} options.permissions - the permissions that the needs to execute the command
  * @param {int} options.cooldown - the command cooldown
  * @author ForYaSee
  */
@@ -34,6 +35,7 @@ class Command {
         this.usages = options.usages || [{usage: '', description: this.description}];
         this.botowner = options.botowner || false;
         this.permissions = options.permissions || [client.permissions.NONE];
+        this.botpermissions = options.botpermissions || [];
         this.cooldown = options.cooldown || 0;
         this.path = options.path ||__filename;
         this.type = 'command';
