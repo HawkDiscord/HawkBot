@@ -14,7 +14,7 @@ class AutoroleCommand extends Command {
                     description: 'Shows the current autorole'
                 },
                 {
-                    usage: 'set <@Role>',
+                    usage: 'set <@role>',
                     description: 'Sets a new autorole'
                 },
                 {
@@ -23,7 +23,7 @@ class AutoroleCommand extends Command {
                 }
             ],
             path: __filename
-        })
+        });
     }
 
     async run(msg, args, lang) {

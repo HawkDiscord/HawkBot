@@ -1,4 +1,4 @@
-const Eris = require("eris-additions")(require("eris"));
+let Eris = require('eris-additions')(require('eris'));
 const rethinkdb = require('../util/rethink');
 const fs = require('fs');
 const colors = require('colors');
@@ -55,6 +55,8 @@ class Hawk extends Eris.Client {
         });
     }
 
+    //Logging
+
     info(title, message) {
         this.log('INFO', title, message);
     }
@@ -72,7 +74,7 @@ class Hawk extends Eris.Client {
     }
 
     log(type, title, message) {
-        console.log(`[ `.white + `W - ${this.worker.id} | S - ${(this.worker.shardStart.toString().length == 1 ? "0" + this.worker.shardStart.toString() : this.worker.shardStart)} ] `.white + `[`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
+        console.log(`[ `.white + `W - ${this.worker.id} | S - ${(this.worker.shardStart.toString().length == 1 ? '0' + this.worker.shardStart.toString() : this.worker.shardStart)} ] `.white + `[`.white + ` ${type} `.green + `] `.white + `[`.white + ` ${title} `.cyan + `] `.white + `${message}`.white);
     }
     
     launch() {
@@ -84,16 +86,16 @@ class Hawk extends Eris.Client {
     }
 }
 
-cluster.worker.on("message", async msg => {
-    if(msg.type === "eval") {
+cluster.worker.on('message', async msg => {
+    if(msg.type === 'eval') {
         try {
             let result = (await eval(msg.input));
-            process.send({ type: "output", result, id: msg.id });
+            process.send({ type: 'output', result, id: msg.id });
         } catch(err) {
-            process.send({ type: "output", error: err.stack, id: msg.id });
+            process.send({ type: 'output', error: err.stack, id: msg.id });
         }
-    } else if(msg.type === "output") {
-            cluster.worker.emit("outputMessage", msg);
+    } else if(msg.type === 'output') {
+            cluster.worker.emit('outputMessage', msg);
     }
 }); 
 

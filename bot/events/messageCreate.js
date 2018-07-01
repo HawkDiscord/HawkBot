@@ -2,17 +2,19 @@ const hawkGuild = require('../entities/HawkGuild.js');
 const hawkUser = require('../entities/HawkUser.js');
 
 async function run(client, msg) {
+
+    //Prototypes
+    require('../core/prototypes/message')(client, msg);
+
     if(msg.author.bot || !msg.guild)
         return;
-            
+
     await hawkGuild.check(client, msg.guild);
-    await hawkGuild.reload(client, msg.guild);
     await hawkUser.check(client, msg.author);
 
     let guild = client.servers.get(msg.guild.id);
     let author = client.members.get(msg.author.id);
     let self = msg.guild.members.get(client.user.id);
-
     msg.self = self;
 
     if (!guild || !author)
@@ -53,6 +55,13 @@ async function run(client, msg) {
             }
         }
     }
+    for (permission of cmd.botpermissions) {
+        if(self.permissions.indexOf(permission) <= -1)
+            return msg.channel.createMessage(`${client.emotes.get('warning')} I need the \`${permission}\` Permission to execute this command.`);
+    }
+    if (!self.permission.has(client.permissions.SEND_MESSAGES))
+        return;
+
     cmd.run(msg, args, lang).catch(error => {
         if (error.message || error.stack)
             console.log(error);

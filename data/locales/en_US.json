@@ -51,5 +51,30 @@
         "set": "Successfully set the new autorole.",
         "notEnabled": "Autorole is already disabled.",
         "disabled": "Autorole is now disabled."
+    },
+
+    "money": ":dollar: You have %money%$, %user%",
+
+    "crypto": {
+        "view": {
+            "notFound": "There is no coin called %crypto%!",
+            "worth": "is just worth **$%price%**"
+        },
+        "wallet": {
+            "noWallet": "You first need to create a wallet.",
+            "created": "Successfully created a new wallet.",
+            "deleted": "Successfully deleted your wallet.",
+            "money": "Money",
+            "noCoins": "No coins bought."
+        },
+        "buy": {
+            "noMoney": "You don't have enough money. The coins costs **%coinprice%$**, but you only have **%money%$**",
+            "success": "Successfully bought **%amount%**x**%coin%**"
+        },
+        "sell": {
+            "noCoin": "You don't have that coin.",
+            "success": "Successfully selled **%amount%**x**%coin%**",
+            "notEnough": "You only have **%amount%**x*%coin%*"
+        }
     }
 }

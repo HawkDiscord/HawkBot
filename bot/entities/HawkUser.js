@@ -20,7 +20,8 @@ module.exports = {
             money: 0,
             bio: 'No bio set.',
             premium: 0,
-            language: 'en_US'
+            language: 'en_US',
+            crypto: {}
         };
         await client.rethink.table('users').insert(newUser).run();
         client.info('Database', `Inserted new user: ${user.id}`);

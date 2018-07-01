@@ -36,6 +36,7 @@
     "klaw": "^2.1.1",
     "klaw-sync": "^4.0.0",
     "rethinkdbdash": "^2.3.31",
+    "round-to": "^3.0.0",
     "socket.io": "^2.1.1",
     "superagent": "^3.8.3"
   }
