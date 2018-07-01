@@ -43,5 +43,18 @@
         "maxAmount": "The maximum amount is %amount%.",
         "cleared": "Successfully cleared `%amount%` messages.",
         "noPerms": "I need the MANAGE_MESSAGE permissions to delete messages."
+    },
+
+    "autorole": {
+        "none": "Autorole is not enabled.",
+        "current": "The current autorole is `%role%`",
+        "error": "An error occurred. Please try again.",
+        "set": "Successfully set the new autorole.",
+        "notEnabled": "Autorole is already disabled.",
+        "disabled": "Autorole is now disabled."
+    },
+    "say": {
+        "usage": "USAGE: `hw!say [channel] <message>`",
+        "invalidColorCode": "You have to specify a valid color code"
     }
 }

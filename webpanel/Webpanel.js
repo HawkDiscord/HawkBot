@@ -25,6 +25,7 @@ const apiShardStatsRoute = require('./routes/ShardStatsRoute');
 const userProfileRoute = require('./routes/UserprofileRoute');
 const loginRoute = require('./routes/LoginRoute');
 const logoutRoute = require('./routes/LogoutRoute');
+const dashboardRoute = require('./routes/DashboardRoute');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -42,6 +43,7 @@ app.use('/api/shards', apiShardStatsRoute);
 app.use('/profile', userProfileRoute);
 app.use('/login', loginRoute);
 app.use('/logout', logoutRoute);
+app.use('/dashboard', dashboardRoute);
 
 class Webpanel {
     constructor(sharder) {

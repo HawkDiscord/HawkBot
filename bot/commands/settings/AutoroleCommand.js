@@ -8,12 +8,65 @@ class AutoroleCommand extends Command {
             displayName: 'Autorole',
             description: 'Setup a role that will automatically assigned to new members',
             permissions: [client.permissions.MANAGE_GUILD],
+            usages: [
+                {
+                    usage: '',
+                    description: 'Shows the current autorole'
+                },
+                {
+                    usage: 'set <@Role>',
+                    description: 'Sets a new autorole'
+                },
+                {
+                    usage: 'disable',
+                    description: 'Disables the autorole'
+                }
+            ],
             path: __filename
         })
     }
 
     async run(msg, args, lang) {
-        //TODO
+        if(args.length === 0)
+            return this.showAutorole(msg, args, lang);
+        switch(args[0].toLowerCase()) {
+            case 'set':
+                return this.setAutorole(msg, args, lang);
+            case 'disable':
+                return this.disableAutorole(msg, args, lang);
+        }
+        this.sendHelp(msg, lang);
+    }
+
+    async setAutorole(msg, args, lang) {
+        if(msg.roleMentions.length !== 1)
+            return this.sendHelp(msg, lang);
+        let role = msg.guild.roles.get(msg.roleMentions[0]);
+        if(!role)
+            return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.autorole.error}`);
+        hawkGuild.update(this.client, msg.guild, {autorole: role.id});
+        return msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.autorole.set}`);
+    }
+
+    async disableAutorole(msg, args, lang) {
+        if(msg.guild.autorole === 'none')
+            return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.notEnabled}`);
+        hawkGuild.update(this.client, msg.guild, {autorole: 'none'});
+        return msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.autorole.disabled}`);
+    }
+
+    async showAutorole(msg, args, lang) {
+        if(msg.guild.autorole === 'none')
+            return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.none}`);
+        let role = msg.guild.roles.get(msg.guild.autorole);
+        if(!role) {
+            hawkGuild.update(this.client, msg.guild, {
+                autorole: 'none'
+            });
+            return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.none}`);
+        }
+
+        msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.current.replace('%role%', role.name)}`);
     }
 }
 
