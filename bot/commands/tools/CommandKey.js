@@ -22,23 +22,34 @@ class KeyCommand extends Command {
     }
 
     async run(msg, args, lang) {
+        msg.delete();
         switch (args[0]) {
-            case '-s':
-            let result = (await process.output({
-                type: 'shard',
-                target: args[1],
-                input: `${args.splice(2,2).join(" ")}`
-            }));
-            result.result = util.inspect(result.result, { depth: 0 })
-            .substring(0, 1950)
-            .replace(new RegExp(this.client.config.bot.token, "gi"), "");
-            console.log(result)
-            if(result.result !== '' && result.result != 'undefined')
-            return msg.channel.createMessage(`:inbox_tray:  **Result:** \`\`\`js\n${result.result}\n\`\`\``);
-            else
-            return msg.channel.createMessage(`:outbox_tray:  **Error:** \`\`\`js\n${result.error}\n\`\`\``);
+            case '-g':
+            if (this.client.config.owners.indexOf(msg.author.id) <= -1)
+                return `${this.client.emotes.get('warning')} ${lang.commandParser.noPermissions}`;
+            if(args[1])
+                switch(args[1]){
+                    case 'beta':
+                        let dateNow = Date.now();
+                        await this.client.rethink.table('keys').insert({ type: 'beta', date: dateNow, creator: msg.author.id }).run();
+                        let key = await this.client.rethink.table('keys').filter({date: dateNow}).run();
+                        await msg.author.getDMChannel().then(channel => channel.createMessage(`Your Generated Key: \`${key[0].id}\` `));
+                }
+            break;
+            default:
+            let dataEntry = await this.client.rethink.table('keys').get(args[0]).run();
+            if(dataEntry == null)
+                return lang.key.invalid;
+            switch(dataEntry.type){
+                case 'beta':
+                await this.client.rethink.table('keys').get(args[0]).delete().run();
+                await this.client.rethink.table('guilds').get(msg.guild.id).update({ beta: true }).run();
+                return lang.key.success
+               }
+            }  
+            break;
         }
     }
-}
+
 
 module.exports = KeyCommand;

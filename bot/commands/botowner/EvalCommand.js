@@ -30,7 +30,6 @@ class EvalCommand extends Command {
             result.result = util.inspect(result.result, { depth: 0 })
             .substring(0, 1950)
             .replace(new RegExp(this.client.config.bot.token, "gi"), "");
-            console.log(result)
             if(result.result !== '' && result.result != 'undefined')
             return msg.channel.createMessage(`:inbox_tray:  **Result:** \`\`\`js\n${result.result}\n\`\`\``);
             else

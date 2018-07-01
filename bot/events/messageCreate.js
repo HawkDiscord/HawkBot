@@ -59,7 +59,10 @@ async function run(client, msg) {
             }
         }
     }
-    cmd.run(msg, args, lang).catch(error => {
+    cmd.run(msg, args, lang).then(value => {
+        if(typeof value === 'string')
+            msg.channel.createMessage(value);
+    }).catch(error => {
         if (error.message || error.stack)
             console.log(error);
         msg.channel.createMessage(error.toString());

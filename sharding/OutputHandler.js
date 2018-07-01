@@ -14,10 +14,6 @@ class OutputHandler extends EventEmitter {
 		this.msg = msg;
 		this.ended = false;
 		this.result = undefined;
-		if(typeof msg.input === "function") {
-			msg.input = `(${msg.input.toString()}).call()`;
-		}
-		console.log(msg.input);
 		this.msg.id = new Snowflake().id;
 		this.msg.output = true;
 		process.send(msg);
@@ -52,7 +48,6 @@ class Snowflake {
 
 
 module.exports = process.output = msg => {
-	console.log('Handler '+JSON.stringify(msg));
 	const handler = new OutputHandler(msg);
 	return new Promise(resolve => handler.on("end", resolve));
 };

@@ -55,5 +55,9 @@
     },
     "say": {
         "invalidColorCode": "You have to specify a valid color code"
+    },
+    "key": {
+        "invalid": "The given Key is invalid!",
+        "success": "Successfully redeemed your Key"
     }
 }
