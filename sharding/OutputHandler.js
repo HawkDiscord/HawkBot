@@ -14,7 +14,6 @@ class OutputHandler extends EventEmitter {
 		this.msg = msg;
 		this.ended = false;
 		this.result = undefined;
-
 		this.msg.id = new Snowflake().id;
 		this.msg.output = true;
 		process.send(msg);

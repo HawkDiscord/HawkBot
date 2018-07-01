@@ -1,6 +1,7 @@
 {
     "commandParser": {
-        "noInvoke": "The current prefix is `%prefix%`"
+        "noInvoke": "The current prefix is `%prefix%`",
+        "noPermissions": "You don't have enough permissions to execute this command."
     },
 
     "reload": {
@@ -53,7 +54,7 @@
         "disabled": "Autorole is now disabled."
     },
 
-    "money": ":dollar: You have %money%$, %user%",
+    "money": "You have %money%$",
 
     "crypto": {
         "view": {
@@ -76,5 +77,12 @@
             "success": "Successfully selled **%amount%**x**%coin%**",
             "notEnough": "You only have **%amount%**x*%coin%*"
         }
+    },
+    "say": {
+        "invalidColorCode": "You have to specify a valid color code"
+    },
+    "key": {
+        "invalid": "The given Key is invalid!",
+        "success": "Successfully redeemed your Key"
     }
 }

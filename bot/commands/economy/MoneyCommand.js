@@ -12,7 +12,7 @@ class MoneyCommand extends Command {
 
     async run(msg, args, lang) {
         let money = msg.author.money;
-        msg.sendInfo(lang.money.replace('%money%', money));
+        return msg.sendCustom(':dollar:', lang.money.replace('%money%', money));
     }
 }
 

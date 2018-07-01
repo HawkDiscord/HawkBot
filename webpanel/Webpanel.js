@@ -11,7 +11,6 @@ const config = JSON.parse(fs.readFileSync('./data/config.json', 'utf8'));
 const superagent = require('superagent');
 const rethinkdb = require('rethinkdbdash');
 const helmet = require('helmet');
-const fancyLog = require('fancy-log');
 
 let rethink = rethinkdb(config.rethinkdb);
 process.config = config;
