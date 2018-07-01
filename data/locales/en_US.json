@@ -54,7 +54,6 @@
         "disabled": "Autorole is now disabled."
     },
     "say": {
-        "usage": "USAGE: `hw!say [channel] <message>`",
         "invalidColorCode": "You have to specify a valid color code"
     }
 }
