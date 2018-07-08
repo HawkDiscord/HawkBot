@@ -17,8 +17,8 @@ module.exports = {
         });
     },
 
-    checkGuildMusicManager(client, guild, member) {
+    checkGuildMusicManager(client, guild) {
         if(!client.players.has(guild.id))
-            client.players.set(guild.id, new MusicManager(client, guild, member));
+            client.players.set(guild.id, new MusicManager(client, guild));
     }
 }

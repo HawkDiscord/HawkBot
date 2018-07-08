@@ -28,15 +28,15 @@ class PrefixCommand extends Command {
                 return await this.sendCurrentPrefix(msg, lang);
             let newPrefix = args[1];
             if(newPrefix.length > 5)
-                return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.prefix.length}`)
+                return msg.sendError(lang.prefix.length);
             hawkGuild.update(this.client, msg.guild, {prefix: newPrefix});
-            return msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.prefix.success}`);
+            return msg.sendSuccess(lang.prefix.success);
         } else
             return await this.sendCurrentPrefix(msg, lang);
     }
 
     async sendCurrentPrefix(msg, lang) {
-        return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.prefix.current.replace('%prefix%', msg.guild.prefix)}`);
+        return msg.sendInfo(lang.prefix.current.replace('%prefix%', msg.guild.prefix));
     }
 }
 

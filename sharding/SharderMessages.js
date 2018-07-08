@@ -60,14 +60,12 @@ module.exports = async (msg, worker) => {
     } else if(msg.type === "output") {
         if(!waitingResults[msg.id]) return;
         let waiting = waitingResults[msg.id];
-        console.log(waiting)
 
         if(msg.error) {
             waiting.worker.send({ type: "output", error: msg.error, id: msg.id });
             delete waitingResults[msg.id];
             return;
         }
-        console.log(msg.result);
         waiting.results.push(msg.result);
         if(waiting.results.length === waiting.expected) {
             if(waiting.expected > 1 || waiting.alwaysPlural) {

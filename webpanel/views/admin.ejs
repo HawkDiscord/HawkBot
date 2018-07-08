@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+    <% include partials/head %>
+    <body>
+        <div class="container hawk-con">
+            <main class="hawk-status">
+                <div class="title-box animated fadeInDown">
+                    <p class="hawk-status-title">Hawk<img class="hawk-status-logo animated rotateIn" src="/assets/img/Logo.png">Admin</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-3">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <a class="nav-link active" id="v-pills-worker-tab" data-toggle="pill" href="#v-pills-worker" role="tab" aria-controls="v-pills-worker" aria-selected="true">Worker</a>
+                        <a class="nav-link" id="v-pills-shards-tab" data-toggle="pill" href="#v-pills-shards" role="tab" aria-controls="v-pills-shards" aria-selected="false">Shards</a>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <div class="tab-pane fade show active" id="v-pills-worker" role="tabpanel" aria-labelledby="v-pills-worker-tab">
+                                In progress...
+                            </div>
+                            
+                            <div class="tab-pane fade" id="v-pills-shards" role="tabpanel" aria-labelledby="v-pills-shards-tab">
+                                <div class="list-group">
+                                    <% for(let i = 0; i < sharder.lTotalShards; i++) { %> <!-- TESTING process.output({type: 'shard', target: i, input: () => process.exit(1)}); -->
+                                        <li id="shard-<%= i %>-control" class="control-text list-group-item animated fadeInUp"><p class="control-text-sub">Shard #<%= (i+1) %> </p><button onclick="" type="button" class="control-btn btn btn-danger float-right control-text-sub"><i class="fas fa-stop"></i></button><button onclick="" type="button" class="control-btn btn btn-warning float-right control-text-sub"><i class="fas fa-sync-alt"></i></button><button type="button" class="control-btn btn btn-secondary float-right control-text-sub"><i class="fas fa-cogs"></i></button></li>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="push"></div>
+            </main>
+            <% include partials/footer %>
+        </div>
+    </body>
+</html>

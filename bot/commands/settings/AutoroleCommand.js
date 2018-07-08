@@ -14,7 +14,7 @@ class AutoroleCommand extends Command {
                     description: 'Shows the current autorole'
                 },
                 {
-                    usage: 'set <@Role>',
+                    usage: 'set <@role>',
                     description: 'Sets a new autorole'
                 },
                 {
@@ -23,7 +23,7 @@ class AutoroleCommand extends Command {
                 }
             ],
             path: __filename
-        })
+        });
     }
 
     async run(msg, args, lang) {
@@ -43,30 +43,30 @@ class AutoroleCommand extends Command {
             return this.sendHelp(msg, lang);
         let role = msg.guild.roles.get(msg.roleMentions[0]);
         if(!role)
-            return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.autorole.error}`);
+            return msg.sendError(lang.autorole.error);
         hawkGuild.update(this.client, msg.guild, {autorole: role.id});
-        return msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.autorole.set}`);
+        return msg.sendSuccess(lang.autorole.set);
     }
 
     async disableAutorole(msg, args, lang) {
         if(msg.guild.autorole === 'none')
-            return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.notEnabled}`);
+            return msg.sendInfo(lang.autorole.notEnabled);
         hawkGuild.update(this.client, msg.guild, {autorole: 'none'});
-        return msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.autorole.disabled}`);
+        return msg.sendSuccess(lang.autorole.disabled);
     }
 
     async showAutorole(msg, args, lang) {
         if(msg.guild.autorole === 'none')
-            return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.none}`);
+            return msg.sendIngo(lang.autorole.none);
         let role = msg.guild.roles.get(msg.guild.autorole);
         if(!role) {
             hawkGuild.update(this.client, msg.guild, {
                 autorole: 'none'
             });
-            return msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.none}`);
+            return msg.sendInfo(lang.autorole.none);
         }
 
-        msg.channel.createMessage(`${this.client.emotes.get('info')}${lang.autorole.current.replace('%role%', role.name)}`);
+        return msg.sendInfo(lang.autorole.current.replace('%role%', role.name));
     }
 }
 

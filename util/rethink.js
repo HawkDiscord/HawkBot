@@ -10,7 +10,7 @@ module.exports = {
     },
 
     createDefaults: async (rethink) => {
-        const tables = ['guilds', 'users'];
+        const tables = ['guilds', 'users', 'keys'];
 
         for (let i = 0; i < tables.length; i++) {
             try {

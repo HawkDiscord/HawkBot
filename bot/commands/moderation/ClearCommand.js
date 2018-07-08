@@ -24,7 +24,7 @@ class ClearCommand extends Command {
 
     async run(msg, args, lang) {
         if(!msg.self.permission.has(this.client.permissions.MANAGE_MESSAGES) && !msg.self.permission.has(this.client.permissions.ADMINISTRATOR))
-            return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.clear.noPerms}`);
+            return msg.sendError(`$${lang.clear.noPerms}`);
         if(args.length === 0)
             return this.sendHelp(msg, lang);
         if(msg.mentions.length === 1)
@@ -37,9 +37,9 @@ class ClearCommand extends Command {
         if (!amount)
             return this.sendHelp(msg, lang);
         if (amount > 500)
-            return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.clear.maxAmount.replace('%amount%', 500)}`);
+            return msg.sendError(lang.clear.maxAmount.replace('%amount%', 500));
         let deleted = await msg.channel.purge(amount);
-        msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.clear.cleared.replace('%amount%', deleted)}`);
+        return msg.sendSuccess(lang.clear.cleared.replace('%amount%', deleted));
     }
 
     async clearUserMessages(msg, args, lang) {
@@ -50,11 +50,11 @@ class ClearCommand extends Command {
         if(!amount)
             return this.sendHelp(msg, lang);
         if(amount > 500)
-            return msg.channel.createMessage(`${this.client.emotes.get('warning')}${lang.clear.maxAmount.replace('%amount%', 500)}`);
+            return msg.sendError(lang.clear.maxAmount.replace('%amount%', 500));
         let deleted = await msg.channel.purge(amount, m => {
             return m.author.id === userId;
         });
-        msg.channel.createMessage(`${this.client.emotes.get('check')}${lang.clear.cleared.replace('%amount%', deleted)}`);
+        return msg.sendSuccess(lang.clear.cleared.replace('%amount%', deleted));
     }
 }
 
