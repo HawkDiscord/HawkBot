@@ -16,11 +16,4 @@ function initMenuBar() {
     } else {
         y.className = "hawk-sub-con";
     }
-
-    var z = document.getElementById("hawk-discord-img");
-    if (z.className === "hawk-discord-img") {
-        z.className = "hawk-discord-img dark";
-    } else {
-        z.className = "hawk-discord-img";
-    }
 }

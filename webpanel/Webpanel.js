@@ -19,6 +19,7 @@ process.shards = new Collection();
 
 //Routes
 const indexRoute = require('./routes/IndexRoute');
+const adminRoute = require('./routes/AdminRoute');
 const statuspageRoute = require('./routes/StatuspageRoute');
 const apiShardStatsRoute = require('./routes/ShardStatsRoute');
 const userProfileRoute = require('./routes/UserprofileRoute');
@@ -37,6 +38,7 @@ app.set('views', path.join(__dirname, 'views'));
 // States: 0: Ready and Operational, 1: Having Issues,
 
 app.use('/', indexRoute);
+app.use('/admin', adminRoute);
 app.use('/status', statuspageRoute);
 app.use('/api/shards', apiShardStatsRoute);
 app.use('/profile', userProfileRoute);
